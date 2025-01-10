@@ -1,5 +1,92 @@
 # Changelog
 
+## 4.1.1
+
+### Patch Changes
+
+- [#2819](https://github.com/Shopify/quilt/pull/2819) [`8972373`](https://github.com/Shopify/quilt/commit/89723734839349aa26c4b015f4f188cf9fc75cc2) Thanks [@brendo](https://github.com/brendo)! - Move @shopify/network to a dependency, not devDependency
+
+## 4.1.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+- [#2787](https://github.com/Shopify/quilt/pull/2787) [`f50049004`](https://github.com/Shopify/quilt/commit/f500490042d922b66a6781c3450f876a83a120cb) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for React 17
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece)]:
+  - @shopify/performance@4.3.0
+
+## 4.0.3
+
+### Patch Changes
+
+- [#2718](https://github.com/Shopify/quilt/pull/2718) [`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47) Thanks [@dependabot](https://github.com/apps/dependabot)! - Bump @babel/traverse from 7.17.9 to 7.23.2
+
+## 4.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`1d96be587`](https://github.com/Shopify/quilt/commit/1d96be587caff31e30895056294542b9742fbe7c)]:
+  - @shopify/performance@4.2.0
+
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies [[`790e16ad8`](https://github.com/Shopify/quilt/commit/790e16ad849af7b5c2c41c0c0df3f1492b90d04b)]:
+  - @shopify/performance@4.1.0
+
+## 4.0.0
+
+### Major Changes
+
+- [#2621](https://github.com/Shopify/quilt/pull/2621) [`bd47f4d8f`](https://github.com/Shopify/quilt/commit/bd47f4d8f6546724e8a627ecf21580ed8099caca) Thanks [@ryanwilsonperkin](https://github.com/ryanwilsonperkin)! - Default to only sending metrics for "Finished" navigations
+
+  usePerformanceReport and PerformanceReport will now default to only sending
+  navigations in the performance report that have been completed (ie. have
+  rendered a PerformanceMark or usePerformanceMark with Stage.Complete).
+
+  This reduces the likelihood of evaluating your metrics incorrectly.
+
+### Patch Changes
+
+- Updated dependencies [[`0a1b2e16e`](https://github.com/Shopify/quilt/commit/0a1b2e16ed7e1f267d9c28a94f637724c1e67140)]:
+  - @shopify/performance@4.0.0
+
+## 3.0.13
+
+### Patch Changes
+
+- Updated dependencies [[`f1eafee08`](https://github.com/Shopify/quilt/commit/f1eafee08d4fd00b50431c3d3c9bfa5b3397ac26)]:
+  - @shopify/performance@3.2.5
+
+## 3.0.12
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+- Updated dependencies [[`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86)]:
+  - @shopify/performance@3.2.4
+
+## 3.0.11
+
+### Patch Changes
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
+- Updated dependencies [[`2f731db68`](https://github.com/Shopify/quilt/commit/2f731db6883193d3d9fe9ada9374fb7d4d8a762f), [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f)]:
+  - @shopify/performance@3.2.3
+
+## 3.0.10
+
+### Patch Changes
+
+- [#2583](https://github.com/Shopify/quilt/pull/2583) [`2aa32e8b8`](https://github.com/Shopify/quilt/commit/2aa32e8b844bda24e9ed1b2747ad9b34491c6261) Thanks [@BPScott](https://github.com/BPScott)! - Add explict `return undefined` to functions that had implicit returns
+
 ## 3.0.9
 
 ### Patch Changes

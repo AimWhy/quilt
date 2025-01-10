@@ -4,8 +4,8 @@
 
 import React from 'react';
 import {renderToString} from 'react-dom/server';
-import gql from 'graphql-tag';
-import {FetchPolicy} from 'apollo-client';
+import type {FetchPolicy} from '@apollo/client';
+import {gql} from '@apollo/client';
 import {extract} from '@shopify/react-effect/server';
 import {createGraphQLFactory} from '@shopify/graphql-testing';
 

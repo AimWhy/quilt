@@ -1,5 +1,13 @@
 # `@shopify/react-universal-provider`
 
+> [!CAUTION]
+>
+> `@shopify/react-universal-provider` is deprecated.
+>
+> Shopifolk, see
+> [Shopify/quilt-internal](https://github.com/shopify/quilt-internal) for
+> information on the latest packages available for use internally.
+
 [![Build Status](https://github.com/Shopify/quilt/workflows/Node-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ANode-CI)
 [![Build Status](https://github.com/Shopify/quilt/workflows/Ruby-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ARuby-CI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md) [![npm version](https://badge.fury.io/js/%40shopify%2Freact-universal-provider.svg)](https://badge.fury.io/js/%40shopify%2Freact-universal-provider.svg) [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/@shopify/react-universal-provider.svg)](https://img.shields.io/bundlephobia/minzip/@shopify/react-universal-provider.svg)
@@ -67,7 +75,6 @@ It is particularly useful for simple object or primitive that need to be sync up
 
 The list below show a few packages with more complex universal provider:
 
-[@shopify/react-app-bridge-universal-provider](../react-app-bridge-universal-provider)
 [@shopify/react-csrf-universal-provider](../react-csrf-universal-provider)
 [@shopify/react-graphql-universal-provider`](../react-graphql-universal-provider)
 [@shopify/react-i18n-universal-provider](../react-i18n-universal-provider)

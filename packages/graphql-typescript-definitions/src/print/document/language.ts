@@ -1,4 +1,10 @@
 import * as t from '@babel/types';
+import type {
+  GraphQLInputType,
+  GraphQLType,
+  GraphQLObjectType,
+  GraphQLCompositeType,
+} from 'graphql';
 import {
   GraphQLString,
   isEnumType,
@@ -7,28 +13,24 @@ import {
   isScalarType,
   isListType,
   isAbstractType,
-  GraphQLInputType,
-  GraphQLType,
   GraphQLNonNull,
-  GraphQLObjectType,
   isInputObjectType,
   isInterfaceType,
   isUnionType,
-  GraphQLCompositeType,
 } from 'graphql';
-import {
+import type {
   Field,
   InlineFragment,
-  isTypedVariable,
   PrintableFieldDetails,
   TypedVariable,
   Variable,
 } from 'graphql-tool-utilities';
+import {isTypedVariable} from 'graphql-tool-utilities';
 
 import {scalarTypeMap} from '../utilities';
 
-import {ObjectStack} from './utilities';
-import {OperationContext} from './context';
+import type {ObjectStack} from './utilities';
+import type {OperationContext} from './context';
 
 export function tsInterfaceBodyForObjectField(
   {fields = []}: PrintableFieldDetails,

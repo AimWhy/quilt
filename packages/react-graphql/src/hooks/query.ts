@@ -1,21 +1,21 @@
 /* eslint react-hooks/rules-of-hooks: off */
 
 import {useEffect, useMemo, useState, useRef} from 'react';
-import {
+import type {
   ApolloClient,
   OperationVariables,
-  ApolloError,
   WatchQueryOptions,
   ObservableQuery,
-} from 'apollo-client';
+} from '@apollo/client';
+import {ApolloError} from '@apollo/client';
 import isEqual from 'fast-deep-equal';
-import {DocumentNode} from 'graphql-typed';
+import type {DocumentNode} from 'graphql-typed';
 import {useServerEffect} from '@shopify/react-effect';
-import {IfAllNullableKeys, NoInfer} from '@shopify/useful-types';
+import type {IfAllNullableKeys, NoInfer} from '@shopify/useful-types';
 
-import {AsyncDocumentNode} from '../types';
+import type {AsyncDocumentNode} from '../types';
 
-import {QueryHookOptions, QueryHookResult} from './types';
+import type {QueryHookOptions, QueryHookResult} from './types';
 import useApolloClient from './apollo-client';
 import useGraphQLDocument from './graphql-document';
 
@@ -126,7 +126,7 @@ export default function useQuery<
     }
 
     let subscription:
-      | ReturnType<typeof queryObservable['subscribe']>
+      | ReturnType<(typeof queryObservable)['subscribe']>
       | undefined;
 
     let previousError;
@@ -138,8 +138,8 @@ export default function useQuery<
     // from: https://github.com/apollographql/react-apollo/blob/v2.2.0/src/Query.tsx#L343
     // after a error on refetch, without this fix, refetch never works again
     function invalidateErrorResult(error: Error) {
-      const lastError = queryObservable!.getLastError();
-      const lastResult = queryObservable!.getLastResult();
+      // @ts-expect-error access last
+      const lastResult = queryObservable?.last;
 
       unsubscribe();
 
@@ -147,7 +147,8 @@ export default function useQuery<
         queryObservable?.resetLastResults();
         subscribe();
       } finally {
-        Object.assign(queryObservable || {}, {lastError, lastResult});
+        // @ts-expect-error override last
+        queryObservable.last = lastResult;
       }
 
       if (!hasOwnProperty.call(error, 'graphQLErrors')) {
@@ -164,8 +165,17 @@ export default function useQuery<
 
     function subscribe() {
       subscription = queryObservable!.subscribe(
-        () => {
+        (status) => {
           previousError = undefined;
+          // apollo 3 calls this when 2 didn't prevent
+          // the extra render
+          if (
+            currentResult.loading === status.loading &&
+            currentResult.networkStatus === status.networkStatus &&
+            status.partial
+          ) {
+            return;
+          }
           invalidateCurrentResult();
         },
         (error) => {
@@ -183,6 +193,7 @@ export default function useQuery<
 
     subscribe();
     return unsubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skip, queryObservable]);
 
   const previousData =
@@ -243,7 +254,7 @@ export default function useQuery<
   return currentResult;
 }
 
-function createDefaultResult<Variables>(
+function createDefaultResult<Variables extends OperationVariables>(
   client: ApolloClient<unknown>,
   variables: Variables,
   queryObservable?: ObservableQuery,

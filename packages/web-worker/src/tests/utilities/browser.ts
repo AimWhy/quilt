@@ -1,9 +1,13 @@
 import {URL} from 'url';
 
-import puppeteer, {Browser} from 'puppeteer';
+import type {Browser} from 'puppeteer';
+import puppeteer from 'puppeteer';
 
 export class AppBrowser {
-  constructor(private readonly browser: Browser, private readonly url: URL) {}
+  constructor(
+    private readonly browser: Browser,
+    private readonly url: URL,
+  ) {}
 
   async go(url = '') {
     const page = await this.browser.newPage();

@@ -1,9 +1,10 @@
-import {DocumentNode} from 'graphql-typed';
-import {createResolver, ResolverOptions} from '@shopify/async';
+import type {DocumentNode} from 'graphql-typed';
+import type {ResolverOptions} from '@shopify/async';
+import {createResolver} from '@shopify/async';
 import {useAsync, AssetTiming} from '@shopify/react-async';
 
 import {useBackgroundQuery} from '../hooks';
-import {AsyncDocumentNode, QueryProps, VariableOptions} from '../types';
+import type {AsyncDocumentNode, QueryProps, VariableOptions} from '../types';
 
 export interface Options<Data, Variables, DeepPartial>
   extends ResolverOptions<DocumentNode<Data, Variables, DeepPartial>> {}

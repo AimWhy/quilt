@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.2.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+## 2.1.0
+
+### Minor Changes
+
+- [#2622](https://github.com/Shopify/quilt/pull/2622) [`e44bc03f7`](https://github.com/Shopify/quilt/commit/e44bc03f7c452e5ecad36a577f02ce8b8dea3f21) Thanks [@MrGVSV](https://github.com/MrGVSV)! - `composeGid` and`composeGidFactory` now return the types `ShopifyGid` and `Gid` respectively. These are template literal types that enforce that the returned string looks like a Gid (i.e. it is a string that looks like "gid://NAMESPACE/TYPE/VALUE`). Adds `isGidFactory`and`isGid` utility functions.
+
 ## 2.0.1
 
 ### Patch Changes

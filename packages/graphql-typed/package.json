@@ -1,6 +1,6 @@
 {
   "name": "graphql-typed",
-  "version": "2.0.1",
+  "version": "2.3.0",
   "license": "MIT",
   "description": "A more strongly typed version of GraphQL's DocumentNode.",
   "main": "index.js",
@@ -21,10 +21,10 @@
   },
   "homepage": "https://github.com/Shopify/quilt/blob/main/packages/graphql-typed/README.md",
   "engines": {
-    "node": "^14.17.0 || >=16.0.0"
+    "node": ">=18.12.0"
   },
   "peerDependencies": {
-    "graphql": ">=14.5.0 <16.0.0"
+    "graphql": ">=14.5.0 <17.0.0"
   },
   "files": [
     "build/",

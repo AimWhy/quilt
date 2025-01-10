@@ -1,9 +1,11 @@
-import {IncomingHttpHeaders} from 'http';
+import type {IncomingHttpHeaders} from 'http';
 
-import {StatusCode, CspDirective, Header} from '@shopify/network';
-import {EffectKind} from '@shopify/react-effect';
+import type {CspDirective} from '@shopify/network';
+import {StatusCode, Header} from '@shopify/network';
+import type {EffectKind} from '@shopify/react-effect';
 
-import {ServerCookieManager, Cookie} from './ServerCookieManager';
+import type {Cookie} from './ServerCookieManager';
+import {ServerCookieManager} from './ServerCookieManager';
 
 export {NetworkContext} from './context';
 

@@ -5,7 +5,7 @@ import {matchesUA} from 'browserslist-useragent';
 import appRoot from 'app-root-path';
 import {ungzip} from 'node-gzip';
 
-import {ConsolidatedManifest, Manifest} from './types';
+import type {ConsolidatedManifest, Manifest} from './types';
 
 const DEFAULT_MANIFEST_PATH = 'build/client/assets.json';
 
@@ -77,15 +77,18 @@ function readGzipped(resolvedPath: string) {
     .then((unzippedStr) => JSON.parse(unzippedStr.toString()));
 }
 
-let loadPromise: Promise<ReturnType<typeof groupManifests>> | null = null;
+const manifestsMapByPath: Map<
+  string,
+  Promise<ReturnType<typeof groupManifests>>
+> = new Map();
 function loadConsolidatedManifest(manifestPath: string, caching: boolean) {
-  if (loadPromise && caching) {
-    return loadPromise;
+  if (manifestsMapByPath.has(manifestPath) && caching) {
+    return manifestsMapByPath.get(manifestPath)!;
   }
 
   const resolvedPath = join(appRoot.path, manifestPath);
   const resolvedZippedPath = `${resolvedPath}.gz`;
-  loadPromise = pathExists(resolvedZippedPath)
+  const promise = pathExists(resolvedZippedPath)
     .then((gzippedVersionExists) => {
       return gzippedVersionExists
         ? readGzipped(resolvedZippedPath)
@@ -95,11 +98,13 @@ function loadConsolidatedManifest(manifestPath: string, caching: boolean) {
       return groupManifests(manifests.map(backfillIdentity));
     });
 
-  return loadPromise;
+  manifestsMapByPath.set(manifestPath, promise);
+
+  return promise;
 }
 
 export function internalOnlyClearCache() {
-  loadPromise = null;
+  manifestsMapByPath.clear();
 }
 
 function find(manifests: Manifest[] | undefined, userAgent) {

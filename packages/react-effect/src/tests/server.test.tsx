@@ -4,18 +4,17 @@
 
 import React from 'react';
 import {renderToString, renderToStaticMarkup} from 'react-dom/server';
-import {clock} from '@shopify/jest-dom-mocks';
 
 import {Effect} from '../Effect';
 import {extract} from '../server';
 
 describe('extract()', () => {
   beforeEach(() => {
-    clock.mock();
+    jest.useFakeTimers();
   });
 
   afterEach(() => {
-    clock.restore();
+    jest.useRealTimers();
   });
 
   it('calls effects', async () => {
@@ -25,7 +24,9 @@ describe('extract()', () => {
   });
 
   it('waits for effects to resolve', async () => {
+    jest.useRealTimers();
     const {promise, resolve, resolved} = createResolvablePromise();
+    /* eslint-disable-next-line jest/no-conditional-in-test */
     const spy = jest.fn(() => (resolved() ? promise : undefined));
     const extractSpy = jest.fn();
     const extractPromise = extract(<Effect perform={spy} />).then(extractSpy);
@@ -45,12 +46,14 @@ describe('extract()', () => {
   it('calls betweenEachPass on each used kind', async () => {
     const {resolve, resolved} = createResolvablePromise();
     const kind = {id: Symbol('id'), betweenEachPass: jest.fn()};
+    /* eslint-disable jest/no-conditional-in-test */
     await extract(
       <Effect
         perform={() => (resolved() ? undefined : resolve())}
         kind={kind}
       />,
     );
+    /* eslint-enable jest/no-conditional-in-test */
     expect(kind.betweenEachPass).toHaveBeenCalledTimes(1);
   });
 
@@ -126,12 +129,14 @@ describe('extract()', () => {
     it('is called between passes', async () => {
       const spy = jest.fn();
       const {resolve, resolved} = createResolvablePromise();
+      /* eslint-disable jest/no-conditional-in-test */
       await extract(
         <Effect perform={() => (resolved() ? undefined : resolve())} />,
         {
           betweenEachPass: spy,
         },
       );
+      /* eslint-enable jest/no-conditional-in-test */
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
@@ -144,17 +149,18 @@ describe('extract()', () => {
       await extract(
         <Effect
           perform={() => {
+            /* eslint-disable-next-line jest/no-conditional-in-test */
             return resolved()
               ? undefined
               : resolve().then(() => {
-                  clock.tick(resolveDuration);
+                  jest.advanceTimersByTime(resolveDuration);
                 });
           }}
         />,
         {
           betweenEachPass: spy,
           renderFunction: (element: React.ReactElement<any>) => {
-            clock.tick(renderDuration);
+            jest.advanceTimersByTime(renderDuration);
             return renderToString(element);
           },
         },
@@ -182,12 +188,14 @@ describe('extract()', () => {
     it('is called after each pass', async () => {
       const spy = jest.fn();
       const {resolve, resolved} = createResolvablePromise();
+      /* eslint-disable jest/no-conditional-in-test */
       await extract(
         <Effect perform={() => (resolved() ? undefined : resolve())} />,
         {
           afterEachPass: spy,
         },
       );
+      /* eslint-enable jest/no-conditional-in-test */
       expect(spy).toHaveBeenCalledTimes(2);
     });
 
@@ -200,17 +208,18 @@ describe('extract()', () => {
       await extract(
         <Effect
           perform={() => {
+            /* eslint-disable-next-line jest/no-conditional-in-test */
             return resolved()
               ? undefined
               : resolve().then(() => {
-                  clock.tick(resolveDuration);
+                  jest.advanceTimersByTime(resolveDuration);
                 });
           }}
         />,
         {
           afterEachPass: spy,
           renderFunction: (element: React.ReactElement<any>) => {
-            clock.tick(renderDuration);
+            jest.advanceTimersByTime(renderDuration);
             return renderToString(element);
           },
         },

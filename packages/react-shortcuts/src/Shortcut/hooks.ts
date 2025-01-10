@@ -1,11 +1,11 @@
 import React from 'react';
 
 import {ShortcutContext} from '../ShortcutProvider';
-import Key, {HeldKey} from '../keys';
+import type {Key, HeldKey} from '../keys';
 
 const DEFAULT_IGNORED_TAGS = ['INPUT', 'SELECT', 'TEXTAREA'] as const;
 
-export type DefaultIgnoredTag = typeof DEFAULT_IGNORED_TAGS[number];
+export type DefaultIgnoredTag = (typeof DEFAULT_IGNORED_TAGS)[number];
 
 export interface Subscription {
   unsubscribe(): void;

@@ -1,6 +1,6 @@
 {
   "name": "@shopify/react-intersection-observer",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "license": "MIT",
   "description": "A React wrapper around the Intersection Observer API",
   "main": "index.js",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/Shopify/quilt/blob/main/packages/react-intersection-observer/README.md",
   "engines": {
-    "node": "^14.17.0 || >=16.0.0"
+    "node": ">=18.12.0"
   },
   "files": [
     "build/",
@@ -32,11 +32,11 @@
     "index.esnext"
   ],
   "peerDependencies": {
-    "react": ">=16.8.0 <19.0.0"
+    "react": ">=18.0.0 <19.0.0"
   },
   "devDependencies": {
-    "@shopify/jest-dom-mocks": "^4.1.0",
-    "@shopify/react-testing": "^5.1.0"
+    "@shopify/jest-dom-mocks": "^5.2.0",
+    "@shopify/react-testing": "^6.0.0"
   },
   "module": "index.mjs",
   "esnext": "index.esnext",

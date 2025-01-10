@@ -1,8 +1,8 @@
 import React from 'react';
-import gql from 'graphql-tag';
+import type {ErrorPolicy} from '@apollo/client';
+import {gql} from '@apollo/client';
 import {createGraphQLFactory} from '@shopify/graphql-testing';
 import {GraphQLError} from 'graphql';
-import {ErrorPolicy} from 'apollo-client';
 
 import useMutation from '../mutation';
 

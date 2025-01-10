@@ -1,7 +1,5 @@
 import {clock} from '@shopify/jest-dom-mocks';
 
-import './matchers';
-
 import {I18n} from '../i18n';
 import {LanguageDirection} from '../types';
 import {DateStyle, Weekday} from '../constants';
@@ -895,8 +893,8 @@ describe('I18n', () => {
       ${'fr-FR'} | ${'OMR'} | ${'1 234,560 OMR'}
       ${'fr-FR'} | ${'USD'} | ${'1 234,56 $ USD'}
       ${'fr-FR'} | ${'CAD'} | ${'1 234,56 $'}
-      ${'ar-EG'} | ${'CAD'} | ${'$ 1,234.56'}
-      ${'ar-EG'} | ${'USD'} | ${'$ 1,234.56 USD'}
+      ${'ar-EG'} | ${'CAD'} | ${'1,234.56 $'}
+      ${'ar-EG'} | ${'USD'} | ${'1,234.56 $ USD'}
       ${'he-IL'} | ${'USD'} | ${'1,234.56 $ USD'}
     `(
       'formats 1234.56 of $currency in $locale to expected $expected',
@@ -930,7 +928,7 @@ describe('I18n', () => {
       ${'fr-FR'} | ${'JPY'} | ${'1 235 ¥ JPY'}
       ${'fr-FR'} | ${'OMR'} | ${'1 234,560 OMR'}
       ${'fr-FR'} | ${'USD'} | ${'1 234,56 $ USD'}
-      ${'ar-EG'} | ${'USD'} | ${'$ 1,234.56 USD'}
+      ${'ar-EG'} | ${'USD'} | ${'1,234.56 $ USD'}
       ${'he-IL'} | ${'USD'} | ${'1,234.56 $ USD'}
     `(
       'formats 1234.56 of $currency in $locale to expected $expected',
@@ -964,7 +962,7 @@ describe('I18n', () => {
       ${'fr-FR'} | ${'JPY'} | ${'-1 235 ¥ JPY'}
       ${'fr-FR'} | ${'OMR'} | ${'-1 234,560 OMR'}
       ${'fr-FR'} | ${'USD'} | ${'-1 234,56 $ USD'}
-      ${'ar-EG'} | ${'USD'} | ${'\u200E-$ 1,234.56 USD'}
+      ${'ar-EG'} | ${'USD'} | ${'\u200E-1,234.56 $ USD'}
       ${'he-IL'} | ${'USD'} | ${'\u200E-1,234.56 $ USD'}
     `(
       'formats -1234.56 of $currency in $locale to expected $expected',
@@ -1066,7 +1064,7 @@ describe('I18n', () => {
       ${'sv-SE'} | ${'USD'} | ${'1 234,56 $'}
       ${'en-US'} | ${'SGD'} | ${'$1,234.56'}
       ${'fr-FR'} | ${'SGD'} | ${'1 234,56 $'}
-      ${'ar-EG'} | ${'USD'} | ${'$ 1,234.56'}
+      ${'ar-EG'} | ${'USD'} | ${'1,234.56 $'}
     `(
       'formats 1234.56 of $currency in $locale to expected $expected',
       ({locale, currency, expected}) => {
@@ -1098,7 +1096,7 @@ describe('I18n', () => {
       ${'sv-SE'} | ${'USD'} | ${'\u22121 234,56 $'}
       ${'en-US'} | ${'SGD'} | ${'-$1,234.56'}
       ${'fr-FR'} | ${'SGD'} | ${'-1 234,56 $'}
-      ${'ar-EG'} | ${'USD'} | ${'\u200E-$ 1,234.56'}
+      ${'ar-EG'} | ${'USD'} | ${'\u200E-1,234.56 $'}
       ${'he-IL'} | ${'USD'} | ${'\u200E-1,234.56 $'}
     `(
       'formats -1234.56 of $currency in $locale to expected $expected',
@@ -1390,10 +1388,14 @@ describe('I18n', () => {
   describe('#formatPercentage()', () => {
     it('formats the number as a percentage', () => {
       const i18n = new I18n(defaultTranslations, defaultDetails);
-      const expected = Intl.NumberFormat(defaultDetails.locale, {
-        style: 'percent',
-      }).format(50);
-      expect(i18n.formatPercentage(50)).toBe(expected);
+      expect(i18n.formatPercentage(0.5)).toBe('50%');
+    });
+
+    it('formats the number as a percentage omitting the percentage symbol', () => {
+      const i18n = new I18n(defaultTranslations, defaultDetails);
+      expect(i18n.formatPercentage(0.5, {percentageSignDisplay: 'never'})).toBe(
+        '50',
+      );
     });
   });
 
@@ -2185,7 +2187,7 @@ describe('I18n', () => {
         ['Europe/Amsterdam', 'en-CA', 'CA', 'Jun 12, 2022', '6:34 p.m.'],
         ['Europe/Amsterdam', 'es', 'ES', '12 jun 2022', '18:34'],
         ['Europe/Amsterdam', 'fr', 'FR', '12 juin 2022', '18:34'],
-        ['Europe/Amsterdam', 'nl-NL', 'NL', '12 jun. 2022', '18:34'],
+        ['Europe/Amsterdam', 'nl-NL', 'NL', '12 jun 2022', '18:34'],
         ['Europe/London', 'en-GB', 'GB', '12 Jun 2022', '17:34'],
       ];
 
@@ -2316,129 +2318,6 @@ describe('I18n', () => {
     });
   });
 
-  describe('#formatName()', () => {
-    it('returns an empty string when nothing is defined', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'en'});
-      expect(i18n.formatName()).toBe('');
-    });
-
-    it('returns only the firstName when lastName is missing', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'en'});
-
-      expect(i18n.formatName('first')).toBe('first');
-      expect(i18n.formatName('first', '')).toBe('first');
-    });
-
-    it('returns only the lastName when firstName is missing', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'en'});
-
-      expect(i18n.formatName('', 'last')).toBe('last');
-    });
-
-    it('defaults to firstName for unknown locale', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'unknown'});
-
-      expect(i18n.formatName('first', 'last')).toBe('first');
-    });
-
-    it('uses fallback locale value for locale without custom formatter', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'fr-CA'});
-
-      expect(i18n.formatName('first', 'last')).toBe('first');
-    });
-
-    it('returns firstName for English', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'en'});
-
-      expect(i18n.formatName('first', 'last')).toBe('first');
-    });
-
-    it('returns custom name for Japanese', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'ja'});
-
-      expect(i18n.formatName('first', 'last')).toBe('last様');
-    });
-
-    it('returns lastName only, for zh-CN', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'zh-CN'});
-
-      expect(i18n.formatName('first', 'last')).toBe('last');
-    });
-
-    it('returns lastName only, for zh-TW', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'zh-TW'});
-
-      expect(i18n.formatName('first', 'last')).toBe('last');
-    });
-
-    it('returns only the firstName when lastName is missing using full', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'en'});
-
-      expect(i18n.formatName('first', '', {full: true})).toBe('first');
-      expect(i18n.formatName('first', undefined, {full: true})).toBe('first');
-    });
-
-    it('returns only the lastName when firstName is missing using full', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'en'});
-
-      expect(i18n.formatName('', 'last', {full: true})).toBe('last');
-    });
-
-    it('returns a string when lastName is undefined using full', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'en'});
-
-      expect(i18n.formatName('', undefined, {full: true})).toBe('');
-    });
-
-    it('returns a string when first and lastName are missing using full', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'en'});
-
-      expect(i18n.formatName(undefined, undefined, {full: true})).toBe('');
-    });
-
-    it('defaults to firstName lastName for unknown locale', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'unknown'});
-
-      expect(i18n.formatName('first', 'last', {full: true})).toBe('first last');
-    });
-
-    it('uses fallback locale value for locale without custom formatter using full', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'fr-CA'});
-
-      expect(i18n.formatName('first', 'last', {full: true})).toBe('first last');
-    });
-
-    it('returns firstName first for English', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'en'});
-
-      expect(i18n.formatName('first', 'last', {full: true})).toBe('first last');
-    });
-
-    it('returns lastName first and no space for Japanese', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'ja'});
-
-      expect(i18n.formatName('first', 'last', {full: true})).toBe('lastfirst');
-    });
-
-    it('returns lastName first and no space for Korean', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'ko'});
-
-      expect(i18n.formatName('first', 'last', {full: true})).toBe('lastfirst');
-    });
-
-    it('returns lastName first and no space for zh-CN', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'zh-CN'});
-
-      expect(i18n.formatName('first', 'last', {full: true})).toBe('lastfirst');
-    });
-
-    it('returns lastName first and no space for zh-TW', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'zh-TW'});
-
-      expect(i18n.formatName('first', 'last', {full: true})).toBe('lastfirst');
-    });
-  });
-
   describe('#translationKeyExists', () => {
     it('returns true if the translation key exists', () => {
       const mockResult = {hello: 'translated string'};
@@ -2477,26 +2356,123 @@ describe('I18n', () => {
       const result = i18n.translationKeyExists(key);
       expect(result).toBe(false);
     });
+
+    describe('when absolute is true', () => {
+      it('returns true if the key exists and is a string', () => {
+        const mockResult = 'translated string';
+        getTranslationTree.mockReturnValue(mockResult);
+
+        const i18n = new I18n(defaultTranslations, defaultDetails);
+        const result = i18n.translationKeyExists('hello', true);
+
+        expect(result).toBe(true);
+      });
+
+      it('returns false if the key exists and is an object', () => {
+        const mockResult = {hello: 'translated string'};
+        getTranslationTree.mockReturnValue(mockResult);
+
+        const i18n = new I18n(defaultTranslations, defaultDetails);
+        const result = i18n.translationKeyExists('hello', true);
+
+        expect(result).toBe(false);
+      });
+
+      it('returns false if the key does not exist', () => {
+        const mockResult = undefined;
+        getTranslationTree.mockReturnValue(mockResult);
+
+        const i18n = new I18n(defaultTranslations, defaultDetails);
+        const result = i18n.translationKeyExists('goodbye', true);
+
+        expect(result).toBe(false);
+      });
+    });
   });
 
-  describe('#hasEasternNameOrderFormatter', () => {
-    it('returns true if easternNameOrderFormatter exists', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'ja'});
+  // we only test a few use cases as this method is simply a wrapper for the similarly
+  // named method in the @shopify/name repo
+  describe('#formatName()', () => {
+    it('works as expected english locale', () => {
+      const i18n = new I18n(defaultTranslations, defaultDetails);
+      const formattedName = i18n.formatName('John', 'Smith', {full: true});
 
-      expect(i18n.hasEasternNameOrderFormatter()).toBe(true);
+      expect(formattedName).toBe('John Smith');
     });
 
-    it('returns false if custom name formatter does not exist', () => {
-      const i18n = new I18n(defaultTranslations, {locale: 'en'});
+    it('works as expected in japanese locale', () => {
+      const i18n = new I18n(defaultTranslations, {locale: 'ja'});
+      const formattedName = i18n.formatName('John', 'Smith', {full: true});
 
-      expect(i18n.hasEasternNameOrderFormatter()).toBe(false);
+      expect(formattedName).toBe('SmithJohn');
+    });
+  });
+
+  // we only test a few use case as this method is simply a wrapper for the similarly
+  // named method in the @shopify/name repo
+  describe('#abbreviateName()', () => {
+    it('works as expected in english locale', () => {
+      const i18n = new I18n(defaultTranslations, defaultDetails);
+      const abbreviatedName = i18n.abbreviateName({
+        firstName: 'John',
+        lastName: 'Smith',
+      });
+
+      expect(abbreviatedName).toBe('JS');
+    });
+
+    it('works as expected in japanese locale', () => {
+      const i18n = new I18n(defaultTranslations, {locale: 'ja'});
+      const abbreviatedName = i18n.abbreviateName({
+        firstName: 'エ',
+        lastName: 'エリ',
+      });
+
+      expect(abbreviatedName).toBe('エリ');
+    });
+  });
+
+  // we only test a few use cases as this method is simply a wrapper for the similarly
+  // named method in the @shopify/name repo
+  describe('#abbreviateBusinessName()', () => {
+    it('works as expected in english locale', () => {
+      const i18n = new I18n(defaultTranslations, defaultDetails);
+      const abbreviatedBusinessName = i18n.abbreviateBusinessName({
+        name: 'Shopify',
+      });
+
+      expect(abbreviatedBusinessName).toBe('Sho');
+    });
+
+    it('works as expected in japanese locale', () => {
+      const i18n = new I18n(defaultTranslations, {locale: 'ja'});
+      const abbreviatedBusinessName = i18n.abbreviateBusinessName({
+        name: '任天堂',
+      });
+
+      expect(abbreviatedBusinessName).toBe('任天堂');
+    });
+  });
+
+  // we only test a few use cases as this method is simply a wrapper for the similarly
+  // named method in the @shopify/name repo
+  describe('#hasFamilyNameGivenNameOrdering()', () => {
+    it('works as expected in english locale', () => {
+      const i18n = new I18n(defaultTranslations, defaultDetails);
+      const hasEasternNameOrderFormatter = i18n.hasEasternNameOrderFormatter();
+
+      expect(hasEasternNameOrderFormatter).toBe(false);
+    });
+
+    it('works as expected in japanese locale', () => {
+      const i18n = new I18n(defaultTranslations, {locale: 'ja'});
+      const hasEasternNameOrderFormatter = i18n.hasEasternNameOrderFormatter();
+
+      expect(hasEasternNameOrderFormatter).toBe(true);
     });
   });
 });
 
 function sanitizeSpaces(input) {
-  return input
-    .replace('\xa0', ' ')
-    .replace('\u202f', ' ')
-    .replace('\u00A0', ' ');
+  return input.replace(/[\u00a0\u202f]/g, ' ');
 }

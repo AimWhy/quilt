@@ -1,5 +1,13 @@
 # `@shopify/address`
 
+> [!CAUTION]
+>
+> `@shopify/address` is deprecated.
+>
+> Shopifolk, see
+> [Shopify/quilt-internal](https://github.com/shopify/quilt-internal) for
+> information on the latest packages available for use internally.
+
 [![Build Status](https://github.com/Shopify/quilt/workflows/Node-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ANode-CI)
 [![Build Status](https://github.com/Shopify/quilt/workflows/Ruby-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ARuby-CI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md) [![npm version](https://badge.fury.io/js/%40shopify%2Faddress.svg)](https://badge.fury.io/js/%40shopify%2Faddress)
@@ -75,6 +83,10 @@ Loads and returns data about a given country in the current locale. Country and 
 #### `async .getCountries(): Promise<Country[]>`
 
 Loads and returns data for all countries in the current locale. Countries are sorted based on the locale. Zones are also ordered based on the locale.
+
+#### `async .getZoneName(countryCode: string, zoneCode: string): Promise<string>`
+
+This returns the names of the provinces or regions for the specified country, displayed in the language that is currently set.
 
 #### `async .getOrderedFields(countryCode): Promise<FieldName[][]>`
 

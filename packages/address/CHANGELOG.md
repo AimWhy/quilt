@@ -1,5 +1,52 @@
 # Changelog
 
+## 4.3.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece)]:
+  - @shopify/address-consts@4.2.0
+
+## 4.2.2
+
+### Patch Changes
+
+- [#2771](https://github.com/Shopify/quilt/pull/2771) [`7923cc804`](https://github.com/Shopify/quilt/commit/7923cc804e5b2147b99f7270ec3c5028d08ba799) Thanks [@alex-amaral](https://github.com/alex-amaral)! - Removing specific filter for countries
+
+## 4.2.1
+
+### Patch Changes
+
+- [#2766](https://github.com/Shopify/quilt/pull/2766) [`18115130e`](https://github.com/Shopify/quilt/commit/18115130e056145c75ce3d7ad37bc183f292f4e1) Thanks [@alex-amaral](https://github.com/alex-amaral)! - Add `signupOnly` parameter to fetch supported countries for shop creation
+
+## 4.2.0
+
+### Minor Changes
+
+- [#2662](https://github.com/Shopify/quilt/pull/2662) [`614b93b69`](https://github.com/Shopify/quilt/commit/614b93b6964c8b9340de4b546a898dd6b435ab7e) Thanks [@pop-web](https://github.com/pop-web)! - Add async function to get province name
+
+## 4.1.0
+
+### Minor Changes
+
+- [#2522](https://github.com/Shopify/quilt/pull/2522) [`f0359c52c`](https://github.com/Shopify/quilt/commit/f0359c52c51c96078ac9e1902411fd1f3df2bc42) Thanks [@cejaekl](https://github.com/cejaekl)! - Add the ability to specify an options object as the second argument when calling `loadCountry`, `AddressFormatter.getCountry()` and `AddressFormatter.getCountries()`. The options object may contain a single option `includeHiddenZones` to enable loading hidden zones.
+
+## 4.0.8
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+## 4.0.7
+
+### Patch Changes
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
 ## 4.0.6
 
 ### Patch Changes

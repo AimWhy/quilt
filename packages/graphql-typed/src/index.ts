@@ -1,9 +1,9 @@
-import {
-  parse as graphQLParse,
+import type {
   DocumentNode as BaseDocumentNode,
   Source,
   ParseOptions,
 } from 'graphql';
+import {parse as graphQLParse} from 'graphql';
 
 export interface GraphQLOperation<Data = {}, Variables = {}, DeepPartial = {}> {
   // We need something to actually use the types, otherwise TypeScript
@@ -22,29 +22,19 @@ export interface DocumentNode<Data = {}, Variables = {}, DeepPartial = {}>
 export interface SimpleDocument<Data = {}, Variables = {}, DeepPartial = {}>
   extends GraphQLOperation<Data, Variables, DeepPartial> {
   readonly id: string;
+  readonly type?: 'query' | 'mutation' | 'subscription';
   readonly name?: string;
   readonly source: string;
 }
 
-export type GraphQLData<T> = T extends GraphQLOperation<infer Data, any, any>
-  ? Data
-  : never;
+export type GraphQLData<T> =
+  T extends GraphQLOperation<infer Data, any, any> ? Data : never;
 
-export type GraphQLVariables<T> = T extends GraphQLOperation<
-  any,
-  infer Variables,
-  any
->
-  ? Variables
-  : never;
+export type GraphQLVariables<T> =
+  T extends GraphQLOperation<any, infer Variables, any> ? Variables : never;
 
-export type GraphQLDeepPartial<T> = T extends GraphQLOperation<
-  any,
-  any,
-  infer DeepPartial
->
-  ? DeepPartial
-  : never;
+export type GraphQLDeepPartial<T> =
+  T extends GraphQLOperation<any, any, infer DeepPartial> ? DeepPartial : never;
 
 export const parse: <Data = {}, Variables = {}, DeepPartial = {}>(
   source: string | Source,

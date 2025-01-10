@@ -1,14 +1,18 @@
 {
-  "extends": "@tsconfig/node-lts-strictest-esm/tsconfig.json",
+  "extends": [
+    "@tsconfig/node-lts/tsconfig.json",
+    "@tsconfig/strictest/tsconfig.json"
+  ],
   "compilerOptions": {
     // Project and build output
     "composite": true,
     "emitDeclarationOnly": true,
     "declarationMap": true,
     "lib": ["dom", "dom.iterable", "es2022"],
-    "isolatedModules": true,
+    "module": "es2022",
     "jsx": "react",
-    "experimentalDecorators": true,
+    "target": "es2022",
+    "moduleResolution": "node",
 
     // Strictness
     // Strict mode enables these options.
@@ -21,13 +25,7 @@
     // These values are are not controled by strict mode, though they are
     // enabled in the 'strictest' config that we inherit from.
     // These reach a level of pedanticness we aren't worried about
-    // importsNotUsedAsValues has 50 violations, but they're trivial fixes
-    "importsNotUsedAsValues": "remove",
-    // allowUnreachableCode has 3 violations, should be a quick fix
-    "allowUnreachableCode": true,
     "noImplicitOverride": false,
-    // noImplicitReturns has 8 violations, should be a quick fix
-    "noImplicitReturns": false,
     "noPropertyAccessFromIndexSignature": false,
     "noUncheckedIndexedAccess": false,
     "exactOptionalPropertyTypes": false

@@ -1,4 +1,4 @@
-import {
+import type {
   Validator,
   FieldStates,
   ErrorValue,
@@ -32,4 +32,5 @@ export function runValidation<Value, Record extends object>(
   }
 
   updateError(undefined);
+  return undefined;
 }

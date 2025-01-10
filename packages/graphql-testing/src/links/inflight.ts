@@ -1,12 +1,7 @@
-import {
-  ApolloLink,
-  Observable,
-  Operation,
-  NextLink,
-  FetchResult,
-} from 'apollo-link';
+import type {Operation, NextLink, FetchResult} from '@apollo/client';
+import {ApolloLink, Observable} from '@apollo/client';
 
-import {MockRequest} from '../types';
+import type {MockRequest} from '../types';
 
 interface Options {
   onCreated(request: MockRequest): void;

@@ -1,5 +1,109 @@
 # Changelog
 
+## 4.2.4
+
+### Patch Changes
+
+- Updated dependencies [[`1171b00`](https://github.com/Shopify/quilt/commit/1171b0022561c062d45d1463a284b7c5049cd8e8)]:
+  - @shopify/react-hooks@4.1.2
+  - @shopify/react-html@13.2.3
+
+## 4.2.3
+
+### Patch Changes
+
+- Updated dependencies [[`2b70145`](https://github.com/Shopify/quilt/commit/2b70145ca6da49ec4c4e0df78a19954b9435afc0)]:
+  - @shopify/react-hooks@4.1.1
+  - @shopify/react-html@13.2.2
+
+## 4.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`0fc2d54`](https://github.com/Shopify/quilt/commit/0fc2d5448681c1ae6abb2308810e7572768d3b08)]:
+  - @shopify/react-hooks@4.1.0
+  - @shopify/react-html@13.2.1
+
+## 4.2.1
+
+### Patch Changes
+
+- Updated dependencies [[`5546b1d`](https://github.com/Shopify/quilt/commit/5546b1d1c3bd9f708699f77e8e1b380575fe76d8), [`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892)]:
+  - @shopify/react-hooks@4.0.0
+  - @shopify/react-html@13.2.0
+
+## 4.2.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+- [#2787](https://github.com/Shopify/quilt/pull/2787) [`f50049004`](https://github.com/Shopify/quilt/commit/f500490042d922b66a6781c3450f876a83a120cb) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for React 17
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece), [`f50049004`](https://github.com/Shopify/quilt/commit/f500490042d922b66a6781c3450f876a83a120cb)]:
+  - @shopify/async@4.1.0
+  - @shopify/react-hooks@3.2.0
+  - @shopify/react-html@13.1.0
+  - @shopify/react-intersection-observer@4.1.0
+
+## 4.1.8
+
+### Patch Changes
+
+- [#2718](https://github.com/Shopify/quilt/pull/2718) [`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47) Thanks [@dependabot](https://github.com/apps/dependabot)! - Bump @babel/traverse from 7.17.9 to 7.23.2
+
+- Updated dependencies [[`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47)]:
+  - @shopify/async@4.0.4
+  - @shopify/react-hooks@3.1.1
+  - @shopify/react-html@13.0.8
+
+## 4.1.7
+
+### Patch Changes
+
+- Updated dependencies [[`a4eae7db3`](https://github.com/Shopify/quilt/commit/a4eae7db327a29a0fe6196fe8b8223c7aedeb89b)]:
+  - @shopify/react-hooks@3.1.0
+  - @shopify/react-html@13.0.7
+
+## 4.1.6
+
+### Patch Changes
+
+- Updated dependencies [[`a3b5c3fc0`](https://github.com/Shopify/quilt/commit/a3b5c3fc0a07e46a64da2eec3669f9469735f412)]:
+  - @shopify/react-hooks@3.0.5
+  - @shopify/react-html@13.0.6
+
+## 4.1.5
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+- Updated dependencies [[`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86)]:
+  - @shopify/async@4.0.3
+  - @shopify/react-hooks@3.0.4
+  - @shopify/react-html@13.0.5
+  - @shopify/react-intersection-observer@4.0.4
+
+## 4.1.4
+
+### Patch Changes
+
+- Updated dependencies [[`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f)]:
+  - @shopify/async@4.0.2
+  - @shopify/react-html@13.0.4
+  - @shopify/react-intersection-observer@4.0.3
+
+## 4.1.3
+
+### Patch Changes
+
+- Updated dependencies [[`2aa32e8b8`](https://github.com/Shopify/quilt/commit/2aa32e8b844bda24e9ed1b2747ad9b34491c6261)]:
+  - @shopify/react-hooks@3.0.3
+  - @shopify/react-html@13.0.3
+
 ## 4.1.2
 
 ### Patch Changes

@@ -1,11 +1,9 @@
 import React from 'react';
 import {memoize as memoizeFn} from '@shopify/function-enhancers';
-import {
-  pseudotranslate as pseudotranslateString,
-  PseudotranslateOptions,
-} from '@shopify/i18n';
+import type {PseudotranslateOptions} from '@shopify/i18n';
+import {pseudotranslate as pseudotranslateString} from '@shopify/i18n';
 
-import {
+import type {
   TranslationDictionary,
   ComplexReplacementDictionary,
   PrimitiveReplacementDictionary,

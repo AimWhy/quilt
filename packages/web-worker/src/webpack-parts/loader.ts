@@ -1,6 +1,13 @@
 import * as path from 'path';
 
-import type {LoaderContext, Compilation, Compiler, Chunk} from 'webpack';
+import type {
+  LoaderContext,
+  Compilation,
+  Compiler,
+  Chunk,
+  PathData,
+  AssetInfo,
+} from 'webpack';
 import {EntryPlugin, webworker, web} from 'webpack';
 
 import {WebWorkerPlugin} from './plugin';
@@ -12,6 +19,7 @@ const moduleWrapperCache = new Map<string, string | false>();
 export interface Options {
   name?: string;
   wrapperModule?: string;
+  publicPathGlobalVariable?: string;
 }
 
 export function pitch(this: LoaderContext<Options>, request: string) {
@@ -70,9 +78,12 @@ export function pitch(this: LoaderContext<Options>, request: string) {
       wrapperContent = cachedContent;
     } else if (cachedContent == null) {
       try {
-        // @ts-expect-error readFileSync is available here
-        wrapperContent = this.fs.readFileSync(wrapperModule).toString();
-        moduleWrapperCache.set(wrapperModule, wrapperContent ?? false);
+        if (this.fs?.readFileSync) {
+          wrapperContent = this.fs.readFileSync(wrapperModule).toString();
+          moduleWrapperCache.set(wrapperModule, wrapperContent ?? false);
+        } else {
+          throw new Error('readFileSync is undefined');
+        }
       } catch (error) {
         moduleWrapperCache.set(wrapperModule, false);
       }
@@ -89,9 +100,9 @@ export function pitch(this: LoaderContext<Options>, request: string) {
   const workerOptions = {
     filename:
       plugin.options.filename ??
-      addWorkerSubExtension(compiler.options.output.filename as string),
+      addWorkerSubExtension(compiler.options.output.filename ?? '[name].js'),
     chunkFilename: addWorkerSubExtension(
-      compiler.options.output.chunkFilename as string,
+      compiler.options.output.chunkFilename ?? '[name].js',
     ),
     globalObject: (plugin && plugin.options.globalObject) || 'self',
   };
@@ -119,7 +130,7 @@ export function pitch(this: LoaderContext<Options>, request: string) {
   }
 
   workerCompiler.runAsChild(
-    (error?: Error, entries?: Chunk[], compilation?: Compilation) => {
+    (error: Error | null, entries?: Chunk[], compilation?: Compilation) => {
       let finalError: Error | undefined;
 
       if (!error && compilation?.errors && compilation.errors.length) {
@@ -135,18 +146,33 @@ export function pitch(this: LoaderContext<Options>, request: string) {
         return callback!(finalError);
       }
 
+      const publicPathGlobalVariable =
+        plugin.options.publicPathGlobalVariable ?? '__webpack_public_path__';
       return callback!(
         null,
-        `export default __webpack_public_path__ + ${JSON.stringify(entry)};`,
+        `export default ${publicPathGlobalVariable} + ${JSON.stringify(
+          entry,
+        )};`,
       );
     },
   );
 }
 
-function addWorkerSubExtension(file: string) {
-  return file.includes('[name]')
-    ? file.replace(/\.([a-z]+)$/i, '.worker.$1')
-    : file.replace(/\.([a-z]+)$/i, '.[name].worker.$1');
+function addWorkerSubExtension(
+  file: string | ((pathData: PathData, assetInfo?: AssetInfo) => string),
+): string | ((pathData: PathData) => string) {
+  if (typeof file === 'function') {
+    return (pathData: PathData) => {
+      const result = file(pathData);
+      return result.includes('[name]')
+        ? result.replace(/\.([a-z]+)$/i, '.worker.$1')
+        : result.replace(/\.([a-z]+)$/i, '.[name].worker.$1');
+    };
+  } else {
+    return file.includes('[name]')
+      ? file.replace(/\.([a-z]+)$/i, '.worker.$1')
+      : file.replace(/\.([a-z]+)$/i, '.[name].worker.$1');
+  }
 }
 
 const loader = {

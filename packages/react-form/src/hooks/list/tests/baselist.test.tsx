@@ -3,11 +3,12 @@ import React from 'react';
 import {faker} from '@faker-js/faker/locale/en';
 import {mount} from '@shopify/react-testing';
 
-import {useBaseList, FieldListConfig} from '../baselist';
-import {ListValidationContext} from '../../../types';
+import type {FieldListConfig} from '../baselist';
+import {useBaseList} from '../baselist';
+import type {ListValidationContext} from '../../../types';
 
+import type {Variant} from './utils';
 import {
-  Variant,
   randomVariants,
   changeEvent,
   alwaysFail,
@@ -211,9 +212,12 @@ describe('useBaseList', () => {
         ];
         const validation = {
           price: (value: string) => {
+            /* eslint-disable jest/no-conditional-in-test */
             if (value.length < 1) {
               return 'Price must be specified';
             }
+            /* eslint-enable jest/no-conditional-in-test */
+            return undefined;
           },
         };
 
@@ -374,15 +378,18 @@ describe('useBaseList', () => {
           ) => {
             const {optionName} = listItem;
 
+            /* eslint-disable jest/no-conditional-in-test */
             const anyDupes = siblings.some(
               (sibling) =>
                 sibling.optionName.value === optionName.value &&
                 sibling.optionValue.value === value,
             );
-            // eslint-disable-next-line jest/no-if
+
             if (anyDupes) {
               return 'No duplicates allowed';
             }
+            /* eslint-enable jest/no-conditional-in-test */
+            return undefined;
           },
         };
 
@@ -435,7 +442,7 @@ describe('useBaseList', () => {
         optionValue: faker.commerce.productMaterial(),
       };
       const wrapper = mount(<TestList list={[variant]} />);
-      const newPrice = faker.commerce.price(10, 80);
+      const newPrice = faker.commerce.price({min: 10, max: 80});
 
       wrapper
         .find(TextField, {name: 'price0'})!

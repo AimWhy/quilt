@@ -1,7 +1,8 @@
-import {useCallback, useEffect, useMemo, ChangeEvent} from 'react';
+import type {ChangeEvent} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import isEqual from 'fast-deep-equal';
 
-import {Validates, Field, DirtyStateComparator} from '../../types';
+import type {Validates, Field, DirtyStateComparator} from '../../types';
 import {normalizeValidation, isChangeEvent} from '../../utilities';
 
 import {
@@ -134,6 +135,7 @@ export function useField<Value = string>(
       }
 
       dispatch(updateErrorAction(undefined));
+      return undefined;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [state.value, ...dependencies],

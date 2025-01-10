@@ -1,5 +1,96 @@
 # Changelog
 
+## 5.7.1
+
+### Patch Changes
+
+- [#2815](https://github.com/Shopify/quilt/pull/2815) [`accab3a`](https://github.com/Shopify/quilt/commit/accab3ae3b1a5f7d729e83825c17f8acc1efa736) Thanks [@BPScott](https://github.com/BPScott)! - Fix typing of "enforce" in vite transform
+
+## 5.7.0
+
+### Minor Changes
+
+- [#2791](https://github.com/Shopify/quilt/pull/2791) [`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892) Thanks [@vsumner](https://github.com/vsumner)! - Update typescript, eslint, and prettier
+
+### Patch Changes
+
+- Updated dependencies [[`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892)]:
+  - graphql-typed@2.3.0
+
+## 5.6.0
+
+### Minor Changes
+
+- [#2789](https://github.com/Shopify/quilt/pull/2789) [`bdebd9197`](https://github.com/Shopify/quilt/commit/bdebd919729fa9f2145aa7003395316081afadef) Thanks [@lemonmade](https://github.com/lemonmade)! - Add `type` field to `SimpleDocument` type
+
+### Patch Changes
+
+- Updated dependencies [[`bdebd9197`](https://github.com/Shopify/quilt/commit/bdebd919729fa9f2145aa7003395316081afadef)]:
+  - graphql-typed@2.2.0
+
+## 5.5.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece)]:
+  - graphql-typed@2.1.0
+
+## 5.4.0
+
+### Minor Changes
+
+- [#2783](https://github.com/Shopify/quilt/pull/2783) [`ae1adc100`](https://github.com/Shopify/quilt/commit/ae1adc100d3ad846473f61fd497f789bb0595c5a) Thanks [@lemonmade](https://github.com/lemonmade)! - Add support for omitting GraphQL source text
+
+## 5.3.5
+
+### Patch Changes
+
+- [#2778](https://github.com/Shopify/quilt/pull/2778) [`12f780698`](https://github.com/Shopify/quilt/commit/12f7806982f7b0b890792e9d389cbf6055a68362) Thanks [@BPScott](https://github.com/BPScott)! - Add graphql `^16.0.0` as an allowable graphql dependency version
+
+- Updated dependencies [[`12f780698`](https://github.com/Shopify/quilt/commit/12f7806982f7b0b890792e9d389cbf6055a68362)]:
+  - graphql-typed@2.0.3
+
+## 5.3.4
+
+### Patch Changes
+
+- [#2767](https://github.com/Shopify/quilt/pull/2767) [`957132820`](https://github.com/Shopify/quilt/commit/9571328209ef77c247f957c68f63eb5c1c971a86) Thanks [@BPScott](https://github.com/BPScott)! - Allow rollup ^4.0.0 as a peer dependency
+
+## 5.3.3
+
+### Patch Changes
+
+- [#2760](https://github.com/Shopify/quilt/pull/2760) [`6efb94586`](https://github.com/Shopify/quilt/commit/6efb94586f4d85553606e24184aa790518fece7c) Thanks [@ryanwilsonperkin](https://github.com/ryanwilsonperkin)! - Prevent bad cache entry for jest and jest-simple transforms referencing stale node_modules paths
+
+## 5.3.2
+
+### Patch Changes
+
+- [#2692](https://github.com/Shopify/quilt/pull/2692) [`762a27333`](https://github.com/Shopify/quilt/commit/762a273337cb2d55633c379c6bd6deb760d73366) Thanks [@vsumner](https://github.com/vsumner)! - Update rollup plugin to ignore sourcemaps to prevent build warnings
+
+## 5.3.1
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+- Updated dependencies [[`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86)]:
+  - graphql-typed@2.0.2
+
+## 5.3.0
+
+### Minor Changes
+
+- [#2597](https://github.com/Shopify/quilt/pull/2597) [`3fdf54a64`](https://github.com/Shopify/quilt/commit/3fdf54a64f1fd500586e5b3e613f780e49582354) Thanks [@lemonmade](https://github.com/lemonmade)! - Add graphql-mini-transforms Rollup and Vite plugins
+
+### Patch Changes
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
 ## 5.2.0
 
 ### Minor Changes

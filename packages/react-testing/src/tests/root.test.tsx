@@ -17,17 +17,6 @@ describe('Root', () => {
     await destroyAll();
   });
 
-  it('works with react 16 style nodes', () => {
-    const root = new Root(<div />);
-
-    // in React 17 _reactInternalFiber is renamed to _reactInternals
-    const rootRef = (root as any).wrapper.rootRef;
-    rootRef._reactInternalFiber = rootRef._reactInternals;
-    delete rootRef._reactInternals;
-
-    expect(() => root.act(() => {})).not.toThrow();
-  });
-
   it('delegates calls to the root element', () => {
     const root = new Root(<div />);
 
@@ -227,13 +216,13 @@ describe('Root', () => {
       function MyComponent() {
         const [renderThrower, setRenderThrower] = React.useState(false);
 
-        /* eslint-disable jest/no-if */
+        /* eslint-disable jest/no-conditional-in-test */
         return renderThrower ? (
           <Thrower />
         ) : (
           <button type="button" onClick={() => setRenderThrower(true)} />
         );
-        /* eslint-enable jest/no-if */
+        /* eslint-enable jest/no-conditional-in-test */
       }
 
       const root = new Root(<MyComponent />);

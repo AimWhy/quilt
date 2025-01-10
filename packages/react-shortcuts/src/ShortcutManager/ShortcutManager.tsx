@@ -1,5 +1,5 @@
-import Key, {HeldKey, ModifierKey} from '../keys';
-import {DefaultIgnoredTag} from '../Shortcut';
+import type {Key, HeldKey, ModifierKey} from '../keys';
+import type {DefaultIgnoredTag} from '../Shortcut';
 
 const ON_MATCH_DELAY = 500;
 
@@ -36,6 +36,34 @@ export default class ShortcutManager {
         shortcuts.splice(unsubscribeIndex, 1);
       },
     };
+  }
+
+  public triggerShortcut({
+    ordered,
+    held,
+    ignoreInput,
+    ignoredTags,
+    allowDefault,
+  }: Partial<Omit<Data, 'node' | 'onMatch'>>) {
+    const matchingShortcut = this.shortcuts.find((shortcut) => {
+      return (
+        arraysMatch(ordered, shortcut.ordered) &&
+        arraysMatch(held || [], shortcut.held || []) &&
+        (ignoredTags == null ||
+          arraysMatch(ignoredTags, shortcut.ignoredTags || [])) &&
+        (ignoreInput == null || ignoreInput === shortcut.ignoreInput) &&
+        (allowDefault == null || allowDefault === shortcut.allowDefault)
+      );
+    });
+
+    if (!matchingShortcut) {
+      return;
+    }
+
+    matchingShortcut.onMatch({
+      ordered: matchingShortcut.ordered,
+      held: matchingShortcut.held,
+    });
   }
 
   private resetKeys() {
@@ -146,10 +174,13 @@ function isFocusedInput(ignoredTags: string[]) {
   );
 }
 
-function arraysMatch<T>(first: T[], second: T[]) {
-  if (first.length !== second.length) {
-    return false;
+function arraysMatch<T>(first: T[] | T, second: T[] | T) {
+  if (Array.isArray(first) && Array.isArray(second)) {
+    if (first.length !== second.length) {
+      return false;
+    }
+    return first.every((value, index) => arraysMatch(value, second[index]));
+  } else {
+    return first === second;
   }
-
-  return first.every((value, index) => second[index] === value);
 }

@@ -3,9 +3,10 @@
 import chalk from 'chalk';
 import yargs from 'yargs';
 
-import {EnumFormat, ExportFormat} from './types';
+import {EnumFormat, EnumStyle, ExportFormat} from './types';
 
-import {Builder, SchemaBuild, DocumentBuild} from '.';
+import type {SchemaBuild, DocumentBuild} from '.';
+import {Builder} from '.';
 
 const argv = yargs
   .usage('Usage: $0 [options]')
@@ -55,6 +56,12 @@ const argv = yargs
       EnumFormat.ScreamingSnakeCase,
     ],
   })
+  .option('enum-style', {
+    required: false,
+    describe:
+      'The style used for generating enums - as typescript enums or as string union types',
+    choices: [EnumStyle.Enum, EnumStyle.Type],
+  })
   .option('custom-scalars', {
     required: false,
     default: '{}',
@@ -69,7 +76,9 @@ const builder = new Builder({
   schemaTypesPath: argv['schema-types-path'],
   addTypename: argv['add-typename'],
   enumFormat: argv['enum-format'],
+  enumStyle: argv['enum-style'],
   customScalars: normalizeCustomScalars(argv['custom-scalars']),
+  exportFormat: argv['export-format'],
 });
 
 function normalizeCustomScalars(customScalarOption: string) {

@@ -1,5 +1,105 @@
 # Changelog
 
+## 3.7.0
+
+### Minor Changes
+
+- [#2791](https://github.com/Shopify/quilt/pull/2791) [`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892) Thanks [@vsumner](https://github.com/vsumner)! - Update typescript, eslint, and prettier
+
+## 3.6.1
+
+### Patch Changes
+
+- [#2795](https://github.com/Shopify/quilt/pull/2795) [`8fa47ffa2`](https://github.com/Shopify/quilt/commit/8fa47ffa22bfdd98c9dc8f94e0ab913d7fef1ba0) Thanks [@iAmNathanJ](https://github.com/iAmNathanJ)! - fix: babel transformations for node targets
+
+## 3.6.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece)]:
+  - @shopify/network@3.3.0
+  - @shopify/performance@4.3.0
+  - @shopify/statsd@4.5.0
+
+## 3.5.3
+
+### Patch Changes
+
+- [#2718](https://github.com/Shopify/quilt/pull/2718) [`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47) Thanks [@dependabot](https://github.com/apps/dependabot)! - Bump @babel/traverse from 7.17.9 to 7.23.2
+
+- Updated dependencies [[`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47)]:
+  - @shopify/statsd@4.4.1
+
+## 3.5.2
+
+### Patch Changes
+
+- Updated dependencies [[`224609455`](https://github.com/Shopify/quilt/commit/2246094558e46d40285327a13d79a106b32e3b72)]:
+  - @shopify/statsd@4.4.0
+
+## 3.5.1
+
+### Patch Changes
+
+- Updated dependencies [[`1d96be587`](https://github.com/Shopify/quilt/commit/1d96be587caff31e30895056294542b9742fbe7c)]:
+  - @shopify/performance@4.2.0
+
+## 3.5.0
+
+### Minor Changes
+
+- [#2698](https://github.com/Shopify/quilt/pull/2698) [`790e16ad8`](https://github.com/Shopify/quilt/commit/790e16ad849af7b5c2c41c0c0df3f1492b90d04b) Thanks [@lemonmade](https://github.com/lemonmade)! - Add special performance event handling for time to last byte
+
+### Patch Changes
+
+- Updated dependencies [[`790e16ad8`](https://github.com/Shopify/quilt/commit/790e16ad849af7b5c2c41c0c0df3f1492b90d04b)]:
+  - @shopify/performance@4.1.0
+
+## 3.4.8
+
+### Patch Changes
+
+- Updated dependencies [[`0a1b2e16e`](https://github.com/Shopify/quilt/commit/0a1b2e16ed7e1f267d9c28a94f637724c1e67140)]:
+  - @shopify/performance@4.0.0
+
+## 3.4.7
+
+### Patch Changes
+
+- Updated dependencies [[`f1eafee08`](https://github.com/Shopify/quilt/commit/f1eafee08d4fd00b50431c3d3c9bfa5b3397ac26), [`e3db8be05`](https://github.com/Shopify/quilt/commit/e3db8be0599474ab132aaa86cf2f492929e8a6a8)]:
+  - @shopify/performance@3.2.5
+  - @shopify/statsd@4.3.0
+
+## 3.4.6
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+- Updated dependencies [[`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86)]:
+  - @shopify/performance@3.2.4
+  - @shopify/statsd@4.2.2
+
+## 3.4.5
+
+### Patch Changes
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
+- Updated dependencies [[`2f731db68`](https://github.com/Shopify/quilt/commit/2f731db6883193d3d9fe9ada9374fb7d4d8a762f), [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f)]:
+  - @shopify/performance@3.2.3
+  - @shopify/statsd@4.2.1
+
+## 3.4.4
+
+### Patch Changes
+
+- [#2583](https://github.com/Shopify/quilt/pull/2583) [`2aa32e8b8`](https://github.com/Shopify/quilt/commit/2aa32e8b844bda24e9ed1b2747ad9b34491c6261) Thanks [@BPScott](https://github.com/BPScott)! - Add explict `return undefined` to functions that had implicit returns
+
 ## 3.4.3
 
 ### Patch Changes

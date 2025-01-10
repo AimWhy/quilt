@@ -1,14 +1,15 @@
-import {DocumentNode, GraphQLInputType, GraphQLSchema} from 'graphql';
-import {
+import type {DocumentNode, GraphQLInputType, GraphQLSchema} from 'graphql';
+import type {
   BooleanCondition,
   CompilerOptions,
-  compileToLegacyIR as compileToIR,
   LegacyCompilerContext,
   LegacyField,
   LegacyFragment,
   LegacyInlineFragment,
   LegacyOperation,
 } from 'apollo-codegen-core/lib/compiler/legacyIR';
+// Explicit js extension as it is required for the esm build
+import {compileToLegacyIR as compileToIR} from 'apollo-codegen-core/lib/compiler/legacyIR.js';
 
 export enum OperationType {
   Query = 'query',

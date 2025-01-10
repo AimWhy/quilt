@@ -1,6 +1,6 @@
 {
   "name": "graphql-config-utilities",
-  "version": "4.1.2",
+  "version": "4.2.0",
   "license": "MIT",
   "description": "Common utilities for graphql-config",
   "main": "index.js",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/Shopify/quilt/blob/main/packages/graphql-config-utilities/README.md",
   "engines": {
-    "node": "^14.17.0 || >=16.0.0"
+    "node": ">=18.12.0"
   },
   "dependencies": {
     "glob": "^7.1.6",

@@ -1,5 +1,13 @@
 # `@shopify/performance`
 
+> [!CAUTION]
+>
+> `@shopify/performance` is deprecated.
+>
+> Shopifolk, see
+> [Shopify/quilt-internal](https://github.com/shopify/quilt-internal) for
+> information on the latest packages available for use internally.
+
 [![Build Status](https://github.com/Shopify/quilt/workflows/Node-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ANode-CI)
 [![Build Status](https://github.com/Shopify/quilt/workflows/Ruby-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ARuby-CI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md) [![npm version](https://badge.fury.io/js/%40shopify%2Fperformance.svg)](https://badge.fury.io/js/%40shopify%2Fperformance.svg) [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/@shopify/performance.svg)](https://img.shields.io/bundlephobia/minzip/@shopify/performance.svg)
@@ -120,7 +128,7 @@ Learn more about [first paint](https://developers.google.com/web/fundamentals/pe
 The time until the browser renders the first bit of content from the DOM.
 Learn more about this [first Contentful Paint](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).
 
-##### Largest Contentful Paint (`EventType.TimeToFirstContentfulPaint`)
+##### Largest Contentful Paint (`EventType.TimeToLargestContentfulPaint`)
 
 The render time of the largest image or text block visible within the viewport, relative to when the page first started loading.
 Learn more about this [Largest Contentful Paint](https://web.dev/lcp/).

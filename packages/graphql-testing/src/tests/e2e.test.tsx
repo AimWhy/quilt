@@ -1,17 +1,14 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {GraphQLError} from 'graphql';
-import gql from 'graphql-tag';
-import {DocumentNode} from 'graphql-typed';
-import {mount} from '@shopify/react-testing';
+import {gql, useApolloClient} from '@apollo/client';
+import type {DocumentNode} from 'graphql-typed';
+import {mount, createMount} from '@shopify/react-testing';
 import {ApolloProvider, useQuery, ApolloError} from '@shopify/react-graphql';
 
 import {createGraphQLFactory} from '..';
+import type {GraphQL} from '..';
 
 const createGraphQL = createGraphQLFactory();
-const createImmutableGraphQL = createGraphQLFactory({
-  assumeImmutableResults: true,
-  cacheOptions: {freezeResults: true},
-});
 
 const petQuery: DocumentNode<{pet?: {name: string} | null}, {id: string}> = gql`
   query Pet($id: ID!) {
@@ -165,8 +162,8 @@ describe('graphql-testing', () => {
     expect(myComponent).toContainReactText('Loading');
   });
 
-  it('allows assumeImmutableResults and freezeResults to be set', async () => {
-    const graphQL = createImmutableGraphQL({
+  it('enforces immutable caches', async () => {
+    const graphQL = createGraphQL({
       Pet: {
         pet: {__typename: 'Cat', name: 'Garfield'},
       },
@@ -362,7 +359,7 @@ describe('graphql-testing', () => {
           {cursor: 'd', node: {__typename: 'Cat', name: 'Not Odie'}},
         ].map((item) => ({__typename: 'Edge', ...item}));
 
-        // eslint-disable-next-line jest/no-if
+        // eslint-disable-next-line jest/no-conditional-in-test
         const startPosition = after
           ? fullData.findIndex((item) => item.cursor === after) + 1
           : 0;
@@ -398,6 +395,7 @@ describe('graphql-testing', () => {
     const request = myComponent.find('button').trigger('onClick');
     await graphQL.resolveAll();
     await request;
+    await graphQL.waitForQueryUpdates();
 
     expect(graphQL).toHavePerformedGraphQLOperation(petsQuery, {
       first: 1,
@@ -411,6 +409,7 @@ describe('graphql-testing', () => {
     const request2 = myComponent.find('button').trigger('onClick');
     await graphQL.resolveAll();
     await request2;
+    await graphQL.waitForQueryUpdates();
 
     expect(graphQL).toHavePerformedGraphQLOperation(petsQuery, {
       first: 1,
@@ -489,30 +488,6 @@ describe('graphql-testing', () => {
       });
     }
 
-    it('resolveAll() filters operations based on the given operationName when passed', async () => {
-      const graphQL = createPetPersonGraphQL();
-
-      const petContainer = mount(
-        <ApolloProvider client={graphQL.client}>
-          <MyComponent />
-          <PersonQueryComponent />
-        </ApolloProvider>,
-      );
-
-      await petContainer.act(async () => {
-        await graphQL.resolveAll({operationName: 'Person'});
-      });
-
-      expect(petContainer).toContainReactText('Jon Arbuckle');
-      expect(petContainer).not.toContainReactText('Garfield');
-
-      await petContainer.act(async () => {
-        await graphQL.resolveAll({operationName: 'Pet'});
-      });
-
-      expect(petContainer).toContainReactText('Garfield');
-    });
-
     it('resolveAll() filters operations based on the given query when passed', async () => {
       const graphQL = createPetPersonGraphQL();
 
@@ -559,6 +534,74 @@ describe('graphql-testing', () => {
       });
 
       expect(petContainer).toContainReactText('Garfield');
+    });
+
+    it('resolveAll() waits for all operations to resolve', async () => {
+      const mountWithGraphQL = createMount<{}, {graphQL: GraphQL}, true>({
+        context({graphQL}) {
+          return {
+            graphQL,
+          };
+        },
+        render(element, {graphQL}) {
+          return (
+            <ApolloProvider client={graphQL.client}>{element}</ApolloProvider>
+          );
+        },
+        afterMount(root) {
+          const {graphQL} = root.context;
+          graphQL.wrap((perform) => root.act(perform));
+        },
+      });
+      const createPetPersonGraphQL = () =>
+        createGraphQL({
+          Pet: () => {
+            return {pet: {__typename: 'Cat', name: 'Garfield'}};
+          },
+          Person: () => {
+            return {person: {__typename: 'Person', name: 'Jon Arbuckle'}};
+          },
+        });
+
+      function MyComponent() {
+        const {data: petData} = useQuery(petQuery);
+        const client = useApolloClient();
+        const [personData, setPersonData] = useState<{name: string} | null>(
+          null,
+        );
+
+        useEffect(() => {
+          /* eslint-disable jest/no-conditional-in-test */
+          if (petData?.pet) {
+            (async () => {
+              const personData = await client.query({
+                query: personQuery,
+              });
+
+              setPersonData(personData.data.person);
+            })();
+          }
+          /* eslint-enable jest/no-conditional-in-test */
+        }, [client, petData?.pet]);
+
+        return <div>{personData?.name}</div>;
+      }
+
+      // using resolveNext, we don't get what we want
+      const graphQL1 = createPetPersonGraphQL();
+      const component1 = await mountWithGraphQL(<MyComponent />, {
+        graphQL: graphQL1,
+      });
+      await graphQL1.resolveNext();
+      expect(component1).not.toContainReactText('Jon Arbuckle');
+
+      // using resolveAll, we do
+      const graphQL2 = createPetPersonGraphQL();
+      const component2 = await mountWithGraphQL(<MyComponent />, {
+        graphQL: graphQL2,
+      });
+      await graphQL2.resolveAll();
+      expect(component2).toContainReactText('Jon Arbuckle');
     });
   });
 });

@@ -3,7 +3,7 @@ import {renderToStaticMarkup} from 'react-dom/server';
 
 import {EffectContext} from './context';
 import {EffectManager} from './manager';
-import {Pass} from './types';
+import type {Pass} from './types';
 
 export {Effect} from './Effect';
 
@@ -29,7 +29,6 @@ export function extract(
     afterEachPass,
   }: Options = {},
 ) {
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const manager = new EffectManager({include});
   const element = (
     <EffectContext.Provider value={manager}>

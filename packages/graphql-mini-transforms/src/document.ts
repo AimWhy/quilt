@@ -1,8 +1,6 @@
 import {createHash} from 'crypto';
 
-import {
-  print,
-  parse,
+import type {
   DocumentNode as UntypedDocumentNode,
   DefinitionNode,
   SelectionSetNode,
@@ -11,7 +9,32 @@ import {
   SelectionNode,
   Location,
 } from 'graphql';
-import {DocumentNode, SimpleDocument} from 'graphql-typed';
+import {print, parse} from 'graphql';
+import type {DocumentNode, SimpleDocument} from 'graphql-typed';
+
+/**
+ * Controls the runtime code that will be generated for a GraphQL document.
+ */
+export type OutputFormat =
+  /**
+   * Outputs the JSON representation of a `DocumentNode`. Use this if you’re using
+   * a powerful GraphQL client like Apollo.
+   */
+  | 'document'
+  /**
+   * Outputs a simple representation of the document that includes just a hash of the
+   * document’s first operation (`id`), the operation’s name (`name`), and the operation’s
+   * source text as a string (`source`). Use this if you’re using a smaller GraphQL approach that
+   * relies on natively fetching the GraphQL query over http, like the one found in Checkout.
+   */
+  | 'simple'
+  /**
+   * Outputs the same simpler representation of `'simple'`, but with the `source` field removed.
+   * Use this if you’re using persisted queries, where the client only communicates the `id` of
+   * the document to the server. Persisted queries are only needed if the the `source` adds significant
+   * bundle size.
+   */
+  | 'simple-persisted';
 
 const IMPORT_REGEX = /^#import\s+['"]([^'"]*)['"];?[\s\n]*/gm;
 const DEFAULT_NAME = 'Operation';
@@ -74,12 +97,35 @@ export function toSimpleDocument<
   DeepPartial extends {},
 >(
   document: DocumentNode<Data, Variables, DeepPartial>,
+  {includeSource = true} = {},
 ): SimpleDocument<Data, Variables, DeepPartial> {
   return {
     id: document.id,
+    type: operationTypeForDocument(document),
     name: operationNameForDocument(document),
-    source: document.loc?.source?.body!,
+    source: includeSource ? document.loc?.source?.body! : '',
   };
+}
+
+export function formatDocument(document: DocumentNode, format: OutputFormat) {
+  switch (format) {
+    case 'document': {
+      return document;
+    }
+    case 'simple': {
+      return toSimpleDocument(document, {includeSource: true});
+    }
+    case 'simple-persisted': {
+      return toSimpleDocument(document, {includeSource: false});
+    }
+  }
+}
+
+function operationTypeForDocument(document: DocumentNode) {
+  return document.definitions.find(
+    (definition): definition is OperationDefinitionNode =>
+      definition.kind === 'OperationDefinition',
+  )?.operation;
 }
 
 function operationNameForDocument(document: DocumentNode) {

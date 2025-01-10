@@ -9,7 +9,7 @@ import {
   isPositiveNumericString,
 } from '@shopify/predicates';
 
-import {StringMapper} from './types';
+import type {StringMapper} from './types';
 import {mapObject} from './utilities';
 
 interface Matcher<Input, Fields = any> {
@@ -68,6 +68,8 @@ export function validateList<Input extends object, Fields>(
     if (errors.some((error) => error != null)) {
       return errors;
     }
+
+    return undefined;
   };
 }
 

@@ -1,22 +1,15 @@
-import {ApolloLink} from 'apollo-link';
-import {
-  InMemoryCache,
-  IntrospectionFragmentMatcher,
-  InMemoryCacheConfig,
-} from 'apollo-cache-inmemory';
-import {ApolloClient} from 'apollo-client';
+import type {DefaultOptions, InMemoryCacheConfig} from '@apollo/client';
+import {ApolloClient, ApolloLink, InMemoryCache} from '@apollo/client';
 
-import {TestingApolloClient} from './client';
 import {MockLink, InflightLink} from './links';
 import {Operations} from './operations';
 import {operationNameFromFindOptions} from './utilities';
-import {GraphQLMock, MockRequest, FindOptions} from './types';
+import type {GraphQLMock, MockRequest, FindOptions} from './types';
 
 export interface Options {
-  unionOrIntersectionTypes?: any[];
   cacheOptions?: InMemoryCacheConfig;
   links?: ApolloLink[];
-  assumeImmutableResults?: boolean;
+  defaultOptions?: DefaultOptions;
 }
 
 interface ResolveAllFindOptions extends FindOptions {
@@ -37,23 +30,9 @@ export class GraphQL {
 
   constructor(
     mock: GraphQLMock = {},
-    {
-      unionOrIntersectionTypes = [],
-      cacheOptions = {},
-      links = [],
-      assumeImmutableResults = false,
-    }: Options = {},
+    {cacheOptions = {}, links = [], defaultOptions = {}}: Options = {},
   ) {
-    const cache = new InMemoryCache({
-      fragmentMatcher: new IntrospectionFragmentMatcher({
-        introspectionQueryResultData: {
-          __schema: {
-            types: unionOrIntersectionTypes,
-          },
-        },
-      }),
-      ...cacheOptions,
-    });
+    const cache = new InMemoryCache(cacheOptions);
 
     this.mockLink = new MockLink(mock);
     const link = ApolloLink.from([
@@ -65,10 +44,11 @@ export class GraphQL {
       this.mockLink,
     ]);
 
-    this.client = new TestingApolloClient({
-      assumeImmutableResults,
+    this.client = new ApolloClient({
+      connectToDevTools: false,
       link,
       cache,
+      defaultOptions,
     });
   }
 
@@ -79,41 +59,51 @@ export class GraphQL {
     this.mockLink.updateMock(mock);
   }
 
+  async resolveNext(options: ResolveAllFindOptions = {}) {
+    await this.withWrapper(async () => {
+      await Promise.all(
+        this.getMatchingRequests(options).map(({resolve}) => resolve()),
+      );
+    });
+  }
+
   async resolveAll(options: ResolveAllFindOptions = {}) {
-    let requestFilter: ((operation: MockRequest) => boolean) | undefined;
-
-    if (Object.keys(options).length) {
-      const finalOperationName = operationNameFromFindOptions(options);
-      requestFilter = ({operation}) => {
-        const nameMatchesOrWasNotSet = finalOperationName
-          ? finalOperationName === operation.operationName
-          : true;
-
-        const customFilterMatchesOrWasNotSet = options.filter
-          ? options.filter(operation)
-          : true;
-
-        return nameMatchesOrWasNotSet && customFilterMatchesOrWasNotSet;
-      };
+    await this.resolveNext(options);
+    while (this.getMatchingRequests(options).length > 0) {
+      await this.resolveNext(options);
     }
+  }
 
-    await this.wrappers.reduce<() => Promise<void>>(
-      (perform, wrapper) => {
-        return () => wrapper(perform);
-      },
-      async () => {
-        const allPendingRequests = Array.from(this.pendingRequests);
-        const matchingRequests = requestFilter
-          ? allPendingRequests.filter(requestFilter)
-          : allPendingRequests;
-
-        await Promise.all(matchingRequests.map(({resolve}) => resolve()));
-      },
-    )();
+  async waitForQueryUpdates() {
+    // queryManager is an internal implementation detail that is a TS-private
+    // property. We can access it in JS but TS thinks we can't so cast to any
+    // to shut typescript up
+    await this.withWrapper(async () => {
+      await (this.client as any).queryManager.broadcastQueries();
+    });
   }
 
   wrap(wrapper: Wrapper) {
     this.wrappers.push(wrapper);
+  }
+
+  private getMatchingRequests(options: ResolveAllFindOptions) {
+    const requestFilter = Object.keys(options).length
+      ? ({operation}: MockRequest) => {
+          const finalOperationName = operationNameFromFindOptions(options);
+          const nameMatchesOrWasNotSet = finalOperationName
+            ? finalOperationName === operation.operationName
+            : true;
+
+          const customFilterMatchesOrWasNotSet = options.filter
+            ? options.filter(operation)
+            : true;
+
+          return nameMatchesOrWasNotSet && customFilterMatchesOrWasNotSet;
+        }
+      : () => true;
+
+    return Array.from(this.pendingRequests).filter(requestFilter);
   }
 
   private handleCreate = (request: MockRequest) => {
@@ -124,4 +114,15 @@ export class GraphQL {
     this.operations.push(request.operation);
     this.pendingRequests.delete(request);
   };
+
+  private async withWrapper(cb: () => Promise<void>) {
+    await this.wrappers.reduce<() => Promise<void>>(
+      (perform, wrapper) => {
+        return () => wrapper(perform);
+      },
+      async () => {
+        await cb();
+      },
+    )();
+  }
 }

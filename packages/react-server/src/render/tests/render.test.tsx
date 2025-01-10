@@ -6,7 +6,8 @@ import {middleware as sewingKitKoaMiddleware} from '@shopify/sewing-kit-koa';
 import {createMockContext} from '@shopify/jest-koa-mocks';
 import withEnv from '@shopify/with-env';
 
-import {createRender, Context} from '../render';
+import type {Context} from '../render';
+import {createRender} from '../render';
 import {mockMiddleware} from '../../tests/utilities';
 
 const mockAssetsScripts = jest.fn(() => Promise.resolve([{path: 'main.js'}]));
@@ -247,7 +248,7 @@ describe('createRender', () => {
 
 function readStream(stream: NodeJS.ReadableStream) {
   return new Promise<string>((resolve) => {
-    let response: string;
+    let response = '';
 
     stream.on('data', (data) => (response += data));
     stream.on('end', () => resolve(response));

@@ -1,5 +1,13 @@
 # `@shopify/react-i18n`
 
+> [!CAUTION]
+>
+> `@shopify/react-i18n` is deprecated.
+>
+> Shopifolk, see
+> [Shopify/quilt-internal](https://github.com/shopify/quilt-internal) for
+> information on the latest packages available for use internally.
+
 [![Build Status](https://github.com/Shopify/quilt/workflows/Node-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ANode-CI)
 [![Build Status](https://github.com/Shopify/quilt/workflows/Ruby-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ARuby-CI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md) [![npm version](https://badge.fury.io/js/%40shopify%2Freact-i18n.svg)](https://badge.fury.io/js/%40shopify%2Freact-i18n.svg) [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/@shopify/react-i18n.svg)](https://img.shields.io/bundlephobia/minzip/@shopify/react-i18n.svg)
@@ -134,7 +142,9 @@ The provided `i18n` object exposes many useful methods for internationalizing yo
   - if `form: 'explicit'` is given, then the result will be the same as for `short`, but will append the ISO 4217 code if it is not already present
   - if `form` is omitted, or if `form: 'auto'` is given, then `explicit` will be selected if the `currency` option does not match the `defaultCurrency`, otherwise `short` is selected. If either `currency` or `defaultCurrency` is not defined then `short` is selected.
 - `unformatCurrency()`: converts a localized currency string to a currency string parseable by JavaScript. Example: `€ 1,25 => 1.25`
-- `formatPercentage()`: formats a number as a percentage according to the locale. Convenience function that simply _auto-assigns_ the `as` option to `percent` and calls `formatNumber()`.
+- `formatPercentage()`: formats a number as a percentage according to the locale.
+  - if `percentageSignDisplay: 'never'` is given, then the percentage sign will be omitted. Example: `0.5 => 50`
+  - if `percentageSignDisplay` is omitted, or if `percentageSignDisplay: 'auto'` is given, then the number will be formatted `as: percent`. Example: `0.5 => 50%`
 - `formatDate()`: formats a date according to the locale. The `defaultTimezone` value supplied to the i18n `I18nContext.Provider` component will be used when no custom `timezone` is provided. Assign the `style` option to a `DateStyle` value to use common formatting options.
   - `DateStyle.Long`: e.g., `Thursday, December 20, 2012`
   - `DateStyle.Short`: e.g., `Dec 20, 2012`
@@ -146,9 +156,16 @@ The provided `i18n` object exposes many useful methods for internationalizing yo
 - `formatName()`: formats a name (first name and/or last name) according to the locale. e,g
   - `formatName('John', 'Smith')` will return `John` in Germany and `Smith様` in Japan
   - `formatName('John', 'Smith', {full: true})` will return `John Smith` in Germany and `SmithJohn` in Japan
+- `abbreviateName()`: takes a name (first and last name) and returns a language appropriate abbreviated name, or will return `formatName` if it
+  is unable to find a suitable abbreviation. For example, "John Smith" would be abbreviated to "JS", whereas "Ren
+  Tanaka" (Japanese "健 田中") would be abbreviated with the last name "田中". You may also pass an optional `idealMaxLength` parameter, which gives the maximum allowable abbreviation length when
+  trying to abbreviate a name in the Korean language (default 3 characters). In Korean, if the first name is longer than
+  this length, the method will instead return the first character of the first name.
+- `abbreviateBusinessName()`: Takes a business name and returns a language appropriate abbreviated name, or will return the input name if it is unable to find a suitable abbreviation. For example, "Shopify" would be abbreviated to "Sho", whereas the japanese business name "任天堂" would be abbreviated "任天堂". You may also pass an optional `idealMaxLength` parameter, which gives the maximum allowable abbreviation length when trying to abbreviate a name.
 - `ordinal()`: formats a number as an ordinal according to the locale, e.g. `1st`, `2nd`, `3rd`, `4th`
 - `hasEasternNameOrderFormatter()`: returns true when an eastern name order formatter corresponding to the locale/language exists.
 - `numberSymbols()`: returns an object specifying the current locale's decimal and thousand symbols. Example: For the `es-ES` locale the output would be `{ decimalSymbol: ',', thousandSymbol: '.' }`
+- `identifyScripts()`: This method provides the ability to identify the scripts used in a block of text. For example: `identifyScript('The quick brown fox jumps') => ['Latin']` and `identifyScript('日本語がわかります。') => ['Han', 'Hiragana']`
 
 Most notably, you will frequently use `i18n`’s `translate()` method. This method looks up a key in translation files that you supply based on the provided locale. This method is discussed in detail in the next section.
 
@@ -245,8 +262,8 @@ If the translation source uses a different placeholder format, like Shopify's th
 ```jsonc
 {
   "general": {
-    "details": "See {{ link }}" // Mustache format
-  }
+    "details": "See {{ link }}", // Mustache format
+  },
 }
 ```
 

@@ -3,10 +3,9 @@ import path from 'path';
 import glob from 'glob';
 import stringHash from 'string-hash';
 import {camelCase} from 'change-case';
-import type {BabelFile} from '@babel/core';
-import {TemplateBuilder} from '@babel/template';
-import Types from '@babel/types';
-import {Node, NodePath} from '@babel/traverse';
+import type {Node, NodePath, BabelFile} from '@babel/core';
+import type {TemplateBuilder} from '@babel/template';
+import type Types from '@babel/types';
 
 import {
   fallbackTranslationsImport,

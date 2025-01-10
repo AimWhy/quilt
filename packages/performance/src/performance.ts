@@ -1,7 +1,7 @@
 import {onLCP, onFID, onFCP, onTTFB} from 'web-vitals';
 
 import {InflightNavigation} from './inflight';
-import {Navigation} from './navigation';
+import type {Navigation} from './navigation';
 import {
   now,
   withEntriesOfType,
@@ -12,7 +12,8 @@ import {
   hasGlobal,
   getResourceTypeFromEntry,
 } from './utilities';
-import {Event, EventType, LifecycleEvent} from './types';
+import type {Event, LifecycleEvent} from './types';
+import {EventType} from './types';
 
 const WATCH_RESOURCE_TYPES = ['script', 'css', 'link'];
 
@@ -52,36 +53,56 @@ export class Performance {
     lifecycleEvent: new Set<EventMap['lifecycleEvent']>(),
   };
 
-  constructor() {
+  constructor(private withCustomNavigation?: (perf: Performance) => void) {
     this.start({timeStamp: 0});
 
-    withNavigation(this.start.bind(this));
+    if (this.withCustomNavigation) {
+      this.withCustomNavigation(this);
+    } else {
+      withNavigation(this.start.bind(this));
+    }
 
     if (
       this.supportsTimingEntries &&
       (!this.supportsDetailedTime || !this.supportsNavigationEntries)
     ) {
-      withTiming(({domContentLoadedEventStart, loadEventStart}) => {
-        // window.performance.timing uses full timestamps, while
-        // the ones coming from observing navigation entries are
-        // time from performance.timeOrigin. We just normalize these
-        // ones to be relative to "start" since things listening for
-        // events expect them to be relative to when the navigation
-        // began.
-        this.lifecycleEvent({
-          type: EventType.DomContentLoaded,
-          start: domContentLoadedEventStart - this.timeOrigin,
-          duration: 0,
-        });
+      withTiming(
+        ({responseEnd, domContentLoadedEventStart, loadEventStart}) => {
+          // window.performance.timing uses full timestamps, while
+          // the ones coming from observing navigation entries are
+          // time from performance.timeOrigin. We just normalize these
+          // ones to be relative to "start" since things listening for
+          // events expect them to be relative to when the navigation
+          // began.
+          this.lifecycleEvent({
+            type: EventType.TimeToLastByte,
+            start: responseEnd - this.timeOrigin,
+            duration: 0,
+          });
 
-        this.lifecycleEvent({
-          type: EventType.Load,
-          start: loadEventStart - this.timeOrigin,
-          duration: 0,
-        });
-      });
+          this.lifecycleEvent({
+            type: EventType.DomContentLoaded,
+            start: domContentLoadedEventStart - this.timeOrigin,
+            duration: 0,
+          });
+
+          this.lifecycleEvent({
+            type: EventType.Load,
+            start: loadEventStart - this.timeOrigin,
+            duration: 0,
+          });
+        },
+      );
     } else {
       withEntriesOfType('navigation', (entry) => {
+        if (entry.responseEnd > 0) {
+          this.lifecycleEvent({
+            type: EventType.TimeToLastByte,
+            start: entry.responseEnd,
+            duration: 0,
+          });
+        }
+
         if (entry.domContentLoadedEventStart > 0) {
           this.lifecycleEvent({
             type: EventType.DomContentLoaded,
@@ -119,6 +140,7 @@ export class Performance {
             metadata: {
               name: entry.name,
               size: entry.encodedBodySize,
+              cached: entry.transferSize === 0 && entry.decodedBodySize > 0,
             },
           },
           {replace: true},

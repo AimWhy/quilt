@@ -1,5 +1,169 @@
 # Changelog
 
+## 6.2.5
+
+### Patch Changes
+
+- Updated dependencies [[`1171b00`](https://github.com/Shopify/quilt/commit/1171b0022561c062d45d1463a284b7c5049cd8e8)]:
+  - @shopify/react-hooks@4.1.2
+  - @shopify/react-graphql@10.3.3
+  - @shopify/react-network@5.2.3
+  - @shopify/react-html@13.2.3
+
+## 6.2.4
+
+### Patch Changes
+
+- Updated dependencies [[`2b70145`](https://github.com/Shopify/quilt/commit/2b70145ca6da49ec4c4e0df78a19954b9435afc0)]:
+  - @shopify/react-hooks@4.1.1
+  - @shopify/react-graphql@10.3.2
+  - @shopify/react-network@5.2.2
+  - @shopify/react-html@13.2.2
+
+## 6.2.3
+
+### Patch Changes
+
+- Updated dependencies [[`0fc2d54`](https://github.com/Shopify/quilt/commit/0fc2d5448681c1ae6abb2308810e7572768d3b08)]:
+  - @shopify/react-hooks@4.1.0
+  - @shopify/react-graphql@10.3.1
+  - @shopify/react-network@5.2.1
+  - @shopify/react-html@13.2.1
+
+## 6.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`5546b1d`](https://github.com/Shopify/quilt/commit/5546b1d1c3bd9f708699f77e8e1b380575fe76d8), [`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892)]:
+  - @shopify/react-hooks@4.0.0
+  - @shopify/react-graphql@10.3.0
+  - @shopify/react-network@5.2.0
+  - @shopify/react-html@13.2.0
+
+## 6.2.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-graphql@10.2.1
+
+## 6.2.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+- [#2787](https://github.com/Shopify/quilt/pull/2787) [`f50049004`](https://github.com/Shopify/quilt/commit/f500490042d922b66a6781c3450f876a83a120cb) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for React 17
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece), [`f50049004`](https://github.com/Shopify/quilt/commit/f500490042d922b66a6781c3450f876a83a120cb)]:
+  - @shopify/react-graphql@10.2.0
+  - @shopify/react-hooks@3.2.0
+  - @shopify/react-html@13.1.0
+  - @shopify/react-network@5.1.0
+
+## 6.1.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-graphql@10.1.3
+
+## 6.1.2
+
+### Patch Changes
+
+- [#2718](https://github.com/Shopify/quilt/pull/2718) [`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47) Thanks [@dependabot](https://github.com/apps/dependabot)! - Bump @babel/traverse from 7.17.9 to 7.23.2
+
+- Updated dependencies [[`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47)]:
+  - @shopify/react-graphql@10.1.2
+  - @shopify/react-hooks@3.1.1
+  - @shopify/react-html@13.0.8
+  - @shopify/react-network@5.0.17
+
+## 6.1.1
+
+### Patch Changes
+
+- Updated dependencies [[`a4eae7db3`](https://github.com/Shopify/quilt/commit/a4eae7db327a29a0fe6196fe8b8223c7aedeb89b)]:
+  - @shopify/react-hooks@3.1.0
+  - @shopify/react-graphql@10.1.1
+  - @shopify/react-network@5.0.16
+  - @shopify/react-html@13.0.7
+
+## 6.1.0
+
+### Minor Changes
+
+- [#2708](https://github.com/Shopify/quilt/pull/2708) [`a224c11d7`](https://github.com/Shopify/quilt/commit/a224c11d7d329470d59c0b97484e75c36e6c8231) Thanks [@markbann](https://github.com/markbann)! - - upgrade @apollo/client to the latest (3.8.10)
+  - set `connectToDevTools` to false by default
+  - allow consumers to pass `defaultOptions` into the options of
+
+### Patch Changes
+
+- Updated dependencies [[`a224c11d7`](https://github.com/Shopify/quilt/commit/a224c11d7d329470d59c0b97484e75c36e6c8231)]:
+  - @shopify/react-graphql@10.1.0
+
+## 6.0.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-graphql@10.0.3
+
+## 6.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`a3b5c3fc0`](https://github.com/Shopify/quilt/commit/a3b5c3fc0a07e46a64da2eec3669f9469735f412)]:
+  - @shopify/react-hooks@3.0.5
+  - @shopify/react-graphql@10.0.2
+  - @shopify/react-network@5.0.15
+  - @shopify/react-html@13.0.6
+
+## 6.0.1
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+- Updated dependencies [[`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86)]:
+  - @shopify/react-graphql@10.0.1
+  - @shopify/react-hooks@3.0.4
+  - @shopify/react-html@13.0.5
+  - @shopify/react-network@5.0.14
+
+## 6.0.0
+
+### Major Changes
+
+- [#2302](https://github.com/Shopify/quilt/pull/2302) [`96a5023e7`](https://github.com/Shopify/quilt/commit/96a5023e7106b91089e29c6a9826948b62bde150) Thanks [@vsumner](https://github.com/vsumner)! - Update Apollo from v2 to v3. Replace dependencies on `apollo-client`, `apollo-cache-inmemory` `apollo-link` and `apollo-link-context` with `@apollo/client`. When updating to Apollo v3, `@shopify/graphql-persisted`, `@shopify/graphql-testing`, `@shopify/react-graphql` and `@shopify/react-graphql-universal-provider` should all be updated at the same time, and you should follow the [Apollo3 migration guide](https://www.apollographql.com/docs/react/migrating/apollo-client-3-migration/).
+
+### Patch Changes
+
+- Updated dependencies [[`2f731db68`](https://github.com/Shopify/quilt/commit/2f731db6883193d3d9fe9ada9374fb7d4d8a762f), [`96a5023e7`](https://github.com/Shopify/quilt/commit/96a5023e7106b91089e29c6a9826948b62bde150), [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f)]:
+  - @shopify/react-network@5.0.13
+  - @shopify/react-graphql@10.0.0
+  - @shopify/react-html@13.0.4
+
+## 5.0.17
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-graphql@9.3.2
+
+## 5.0.16
+
+### Patch Changes
+
+- Updated dependencies [[`2aa32e8b8`](https://github.com/Shopify/quilt/commit/2aa32e8b844bda24e9ed1b2747ad9b34491c6261)]:
+  - @shopify/react-hooks@3.0.3
+  - @shopify/react-graphql@9.3.1
+  - @shopify/react-network@5.0.12
+  - @shopify/react-html@13.0.3
+
 ## 5.0.15
 
 ### Patch Changes

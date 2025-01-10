@@ -1,5 +1,72 @@
 # Changelog
 
+## 5.2.0
+
+### Minor Changes
+
+- [#2791](https://github.com/Shopify/quilt/pull/2791) [`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892) Thanks [@vsumner](https://github.com/vsumner)! - Update typescript, eslint, and prettier
+
+## 5.1.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece)]:
+  - @shopify/async@4.1.0
+
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [[`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47)]:
+  - @shopify/async@4.0.4
+
+## 5.0.0
+
+### Major Changes
+
+- [#2642](https://github.com/Shopify/quilt/pull/2642) [`db05ac6d1`](https://github.com/Shopify/quilt/commit/db05ac6d1fc57a126d30cf50476dd92d279974ea) Thanks [@BPScott](https://github.com/BPScott)! - Replace `lolex` with using Jest's built-in clock mocking, available since Jest 26. Internally Jest uses `@sinon/fake-timers` which is the API-compatible successor to `lolex`.
+
+  As of Jest 26, the functionality of the Clock and Timer mocks are built into Jest. We recommend replacing usage of these mocks with calling jest directly:
+
+  - Replace `clock.mock()` and `timer.mock()` with `jest.useFakeTimers()`
+  - Replace `clock.restore()` and `timer.restore()` with `jest.useRealTimers()`
+  - Replace `clock.tick(time)` with `jest.advanceTimersByTime(time)`
+  - Replace `clock.setTime(time)` with `jest.setSystemTime(time)`
+  - Replace `timer.runAllTimers()` with `jest.runAllTimers()`
+  - Replace `timer.runTimersToTime()` with `jest.advanceTimersByTime()`
+
+  You may encounter problems if you try to use the Clock and Timer mocks in the same file. We suggest migrating away from both of them, and replacing them with Jest's own mocking behaviour.
+
+## 4.2.0
+
+### Minor Changes
+
+- [#2619](https://github.com/Shopify/quilt/pull/2619) [`d1b6a3c02`](https://github.com/Shopify/quilt/commit/d1b6a3c0264abfc232166638df8a88164d6db8a3) Thanks [@bryanparadis](https://github.com/bryanparadis)! - Add `keys` function to Storage mock
+
+## 4.1.2
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+- Updated dependencies [[`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86)]:
+  - @shopify/async@4.0.3
+
+## 4.1.1
+
+### Patch Changes
+
+- [#2593](https://github.com/Shopify/quilt/pull/2593) [`2f731db68`](https://github.com/Shopify/quilt/commit/2f731db6883193d3d9fe9ada9374fb7d4d8a762f) Thanks [@BPScott](https://github.com/BPScott)! - Remove unneeded `void 0` class property initializations
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
+- Updated dependencies [[`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f)]:
+  - @shopify/async@4.0.2
+
 ## 4.1.0
 
 ### Minor Changes

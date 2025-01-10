@@ -1,27 +1,32 @@
-import {
+import type {
   ApolloClient,
   MutationOptions as ClientMutationOptions,
-} from 'apollo-client';
-import {
   QueryResult,
-  ExecutionResult,
   OperationVariables,
-} from '@apollo/react-common';
-import {QueryOptions, MutationOptions} from '@apollo/react-hooks';
-import {IfAllNullableKeys} from '@shopify/useful-types';
+  MutationOptions,
+  FetchResult,
+} from '@apollo/client';
+import type {QueryComponentOptions} from '@apollo/client/react/components';
+import type {IfAllNullableKeys} from '@shopify/useful-types';
 
-import {VariableOptions} from '../types';
+import type {VariableOptions} from '../types';
 
-export type QueryHookOptions<Data = any, Variables = OperationVariables> = Omit<
-  QueryOptions<Data, Variables>,
+export type QueryHookOptions<
+  Data = any,
+  Variables extends OperationVariables = OperationVariables,
+> = Omit<
+  QueryComponentOptions<Data, Variables>,
   'query' | 'partialRefetch' | 'children' | 'variables'
 > &
   VariableOptions<Variables> & {
     skip?: boolean;
   };
 
-export interface QueryHookResult<Data, Variables>
-  extends Omit<QueryResult<Data, Variables>, 'networkStatus' | 'variables'> {
+export interface QueryHookResult<Data, Variables extends OperationVariables>
+  extends Omit<
+    QueryResult<Data, Variables>,
+    'networkStatus' | 'variables' | 'reobserve' | 'observable'
+  > {
   networkStatus: QueryResult<Data, Variables>['networkStatus'] | undefined;
   variables: QueryResult<Data, Variables>['variables'] | undefined;
 }
@@ -44,4 +49,4 @@ export type MutationHookResult<Data, Variables> = (
     [MutationHookOptions<Data, Variables>?],
     [MutationHookOptions<Data, Variables>]
   >
-) => Promise<ExecutionResult<Data>>;
+) => Promise<FetchResult<Data>>;

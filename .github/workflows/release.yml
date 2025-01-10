@@ -13,18 +13,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.SHOPIFY_GH_ACCESS_TOKEN }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 18.x
           cache: 'yarn'
 
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
+      - name: 📦 Install dependencies
+        run: |
+          npm install -g node-gyp
+          yarn --frozen-lockfile
 
       - name: Create release Pull Request or publish to NPM
         id: changesets

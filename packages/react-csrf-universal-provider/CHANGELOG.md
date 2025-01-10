@@ -1,5 +1,102 @@
 # Changelog
 
+## 3.1.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-html@13.2.3
+  - @shopify/react-universal-provider@3.1.4
+
+## 3.1.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-html@13.2.2
+  - @shopify/react-universal-provider@3.1.3
+
+## 3.1.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-html@13.2.1
+  - @shopify/react-universal-provider@3.1.2
+
+## 3.1.1
+
+### Patch Changes
+
+- Updated dependencies [[`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892)]:
+  - @shopify/react-html@13.2.0
+  - @shopify/react-universal-provider@3.1.1
+
+## 3.1.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+- [#2787](https://github.com/Shopify/quilt/pull/2787) [`f50049004`](https://github.com/Shopify/quilt/commit/f500490042d922b66a6781c3450f876a83a120cb) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for React 17
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece), [`f50049004`](https://github.com/Shopify/quilt/commit/f500490042d922b66a6781c3450f876a83a120cb)]:
+  - @shopify/react-csrf@3.1.0
+  - @shopify/react-html@13.1.0
+  - @shopify/react-universal-provider@3.1.0
+
+## 3.0.15
+
+### Patch Changes
+
+- [#2718](https://github.com/Shopify/quilt/pull/2718) [`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47) Thanks [@dependabot](https://github.com/apps/dependabot)! - Bump @babel/traverse from 7.17.9 to 7.23.2
+
+- Updated dependencies [[`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47)]:
+  - @shopify/react-html@13.0.8
+  - @shopify/react-universal-provider@3.0.15
+
+## 3.0.14
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-html@13.0.7
+  - @shopify/react-universal-provider@3.0.14
+
+## 3.0.13
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-html@13.0.6
+  - @shopify/react-universal-provider@3.0.13
+
+## 3.0.12
+
+### Patch Changes
+
+- Updated dependencies [[`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86)]:
+  - @shopify/react-html@13.0.5
+  - @shopify/react-universal-provider@3.0.12
+
+## 3.0.11
+
+### Patch Changes
+
+- Updated dependencies [[`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f)]:
+  - @shopify/react-html@13.0.4
+  - @shopify/react-universal-provider@3.0.11
+
+## 3.0.10
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-html@13.0.3
+  - @shopify/react-universal-provider@3.0.10
+
 ## 3.0.9
 
 ### Patch Changes

@@ -10,3 +10,4 @@ export {
 export type {TranslateOptions} from './translate';
 export {convertFirstSpaceToNonBreakingSpace} from './string';
 export {DEFAULT_FORMAT, ERB_FORMAT, MUSTACHE_FORMAT} from './interpolate';
+export {identifyScripts} from './identifyScripts';

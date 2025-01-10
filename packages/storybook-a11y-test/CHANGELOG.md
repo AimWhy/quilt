@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.2.1
+
+### Patch Changes
+
+- [#2795](https://github.com/Shopify/quilt/pull/2795) [`8fa47ffa2`](https://github.com/Shopify/quilt/commit/8fa47ffa22bfdd98c9dc8f94e0ab913d7fef1ba0) Thanks [@iAmNathanJ](https://github.com/iAmNathanJ)! - fix: babel transformations for node targets
+
+## 1.2.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+## 1.1.3
+
+### Patch Changes
+
+- [#2650](https://github.com/Shopify/quilt/pull/2650) [`1fcf187ed`](https://github.com/Shopify/quilt/commit/1fcf187ed0762c4b98536505e5b1c8ec3efca57f) Thanks [@Germanika](https://github.com/Germanika)! - Add #storybook-root selector to support Storybook v7
+
+## 1.1.2
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+## 1.1.1
+
+### Patch Changes
+
+- [#2593](https://github.com/Shopify/quilt/pull/2593) [`2f731db68`](https://github.com/Shopify/quilt/commit/2f731db6883193d3d9fe9ada9374fb7d4d8a762f) Thanks [@BPScott](https://github.com/BPScott)! - Remove unneeded `void 0` class property initializations
+
 ## 1.1.0
 
 ### Minor Changes

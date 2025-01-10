@@ -1,5 +1,13 @@
 # `@shopify/statsd`
 
+> [!CAUTION]
+>
+> `@shopify/statsd` is deprecated.
+>
+> Shopifolk, see
+> [Shopify/quilt-internal](https://github.com/shopify/quilt-internal) for
+> information on the latest packages available for use internally.
+
 [![Build Status](https://github.com/Shopify/quilt/workflows/Node-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ANode-CI)
 [![Build Status](https://github.com/Shopify/quilt/workflows/Ruby-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ARuby-CI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md) [![npm version](https://badge.fury.io/js/%40shopify%2Fstatsd.svg)](https://badge.fury.io/js/%40shopify%2Fstatsd.svg)
@@ -74,6 +82,17 @@ Increments a stat by 1.
 statsdClient.increment(
   'myCounter',
   ['navigation', 'complete', 'performance'], // user-defined tags to go with the data
+);
+```
+
+Increment can also be supplied a value to increment the metric by.
+
+```javascript
+statsdClient.increment(
+  'myCounter',
+  ['navigation', 'complete', 'performance'], // user-defined tags to go with the data,
+  {}, // additional options
+  4, // value to increment by
 );
 ```
 

@@ -1,5 +1,13 @@
 # `@shopify/web-worker`
 
+> [!CAUTION]
+>
+> `@shopify/web-worker` is deprecated.
+>
+> Shopifolk, see
+> [Shopify/quilt-internal](https://github.com/shopify/quilt-internal) for
+> information on the latest packages available for use internally.
+
 [![Build Status](https://github.com/Shopify/quilt/workflows/Node-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ANode-CI)
 [![Build Status](https://github.com/Shopify/quilt/workflows/Ruby-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ARuby-CI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md) [![npm version](https://badge.fury.io/js/%40shopify%2Fweb-worker.svg)](https://badge.fury.io/js/%40shopify%2Fweb-workers.svg) [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/@shopify/web-worker.svg)](https://img.shields.io/bundlephobia/minzip/@shopify/web-worker.svg)
@@ -91,7 +99,7 @@ As noted in the browser section, worker code should be mindful of the [limitatio
 
 #### Limitations
 
-This library implements the calling of functions on a worker using [`@remote-ui/rpc`](https://github.com/Shopify/remote-ui/tree/main/packages/rpc). As such, all the limitations and additional considerations in that library must be considered with the functions you expose from the worker. In particular, note the [memory management concerns](https://github.com/Shopify/remote-ui/tree/main/packages/rpc#memory) when passing functions to and from the worker. For convenience, the `release` and `retain` methods from `@remote-ui/rpc` are re-exported from this library.
+This library implements the calling of functions on a worker using [`@remote-ui/rpc`](https://github.com/Shopify/remote-dom/tree/remote-ui/packages/rpc). As such, all the limitations and additional considerations in that library must be considered with the functions you expose from the worker. In particular, note the [memory management concerns](https://github.com/Shopify/remote-dom/tree/remote-ui/packages/rpc#memory) when passing functions to and from the worker. For convenience, the `release` and `retain` methods from `@remote-ui/rpc` are re-exported from this library.
 
 ### Tooling
 
@@ -127,6 +135,7 @@ The `WebWorkerPlugin` helps coordinate a few things during webpack compilation a
 
 - `globalObject`: allows you to customize the [`options.output.globalObject`](https://webpack.js.org/configuration/output/#outputglobalobject) option passed to the child Webpack compiler. By default, this is set to `self`, which works well in workers, but if you have a different global object that must be used, you can pass it here.
 - `plugins`: an array of [webpack plugins](https://webpack.js.org/plugins/) to include in the child compilation of the worker. This library automatically includes a few plugins that will generate output code appropriate for workers.
+- `publicPathGlobalVariable`: a global variable name to be read when prefixing the worker's script path. When this option is set, the loader assumes the global variable will always be defined. By default, this value is `__webpack_public_path__` which is always defined.
 
 #### Tests
 
@@ -136,7 +145,7 @@ We do **not** recommend including the Babel plugin for the test environment. Whe
 
 ##### Customizing worker creation
 
-By default, this library will create a worker by calling `new Worker` with a blob URL for the worker script. This is generally all you need, but some use cases may want to construct the worker differently. For example, you might want to construct a worker in a sandboxed iframe to ensure the worker is not treated as same-origin, or create a worker farm instead of a worker per script. To do so, you can supply the `createMessenger` option to the function provided by `createWorkerFactory`. This option should be a function that accepts a `URL` object for the location of the worker script, and return a `MessageEndpoint` compatible with being passed to [`@remote-ui/rpc`’s `createEndpoint`](https://github.com/Shopify/remote-ui/tree/main/packages/rpc#usage) API.
+By default, this library will create a worker by calling `new Worker` with a blob URL for the worker script. This is generally all you need, but some use cases may want to construct the worker differently. For example, you might want to construct a worker in a sandboxed iframe to ensure the worker is not treated as same-origin, or create a worker farm instead of a worker per script. To do so, you can supply the `createMessenger` option to the function provided by `createWorkerFactory`. This option should be a function that accepts a `URL` object for the location of the worker script, and return a `MessageEndpoint` compatible with being passed to [`@remote-ui/rpc`’s `createEndpoint`](https://github.com/Shopify/remote-dom/tree/remote-ui/packages/rpc#usage) API.
 
 ```ts
 import {fromMessagePort} from '@remote-ui/rpc';
@@ -222,7 +231,7 @@ console.log(createWorker.url);
 
 ##### "Plain" workers
 
-The power of the `createWorkerFactory` library is that it automatically wraps the `Worker` in an [`@remote-ui/rpc` `Endpoint`](https://github.com/Shopify/remote-ui/tree/main/packages/rpc#endpoint). This allows the seamless calling of module methods from the main thread to the worker, and the ability to pass non-serializable constructs like functions. However, if your use case does not require this RPC layer, you can save on bundle size by creating a "plain" worker factory. The functions created by `createPlainWorkerFactory` can be used to create `Worker` objects directly, with which you can implement whatever message passing system you want.
+The power of the `createWorkerFactory` library is that it automatically wraps the `Worker` in an [`@remote-ui/rpc` `Endpoint`](https://github.com/Shopify/remote-dom/tree/remote-ui/packages/rpc#endpoint). This allows the seamless calling of module methods from the main thread to the worker, and the ability to pass non-serializable constructs like functions. However, if your use case does not require this RPC layer, you can save on bundle size by creating a "plain" worker factory. The functions created by `createPlainWorkerFactory` can be used to create `Worker` objects directly, with which you can implement whatever message passing system you want.
 
 ```ts
 import {createPlainWorkerFactory} from '@shopify/web-worker';
@@ -260,4 +269,4 @@ expose(api);
 
 This imaginary module is then compiled with webpack. The loader takes the asset metadata from compiling the worker, and makes that information the exported data from the original `./worker` module. Finally, `createWorkerFactory()` takes this metadata (which includes the main script tag that should be loaded in the worker) and, when called, creates a new `Worker` instance using a `Blob` that calls `importScripts()` on the main script for the worker.
 
-The actual communication between the parent and worker is handled by [`@remote-ui/rpc`](https://github.com/Shopify/remote-ui/tree/main/packages/rpc).
+The actual communication between the parent and worker is handled by [`@remote-ui/rpc`](https://github.com/Shopify/remote-dom/tree/remote-ui/packages/rpc).

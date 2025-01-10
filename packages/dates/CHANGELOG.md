@@ -1,5 +1,34 @@
 # Changelog
 
+## 2.1.1
+
+### Patch Changes
+
+- [#2842](https://github.com/Shopify/quilt/pull/2842) [`d2c9fae`](https://github.com/Shopify/quilt/commit/d2c9fae1a2a62f3c9f5f327c4a7351b33c8a88de) Thanks [@ginabak](https://github.com/ginabak)! - Correctly support deprecated timezones in older browsers when calling `formatDate()`. For example, modern browsers support both `Europe/Kyiv` and (the now deprecated) `Europe/Kiev`, but browsers as recent as Chrome 131 on MacOS only support `Europe/Kiev`. Note: This is a purely internal change which should not effect the result of calling `formatDate()`.
+
+## 2.1.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece)]:
+  - @shopify/function-enhancers@3.1.0
+
+## 2.0.3
+
+### Patch Changes
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
+## 2.0.2
+
+### Patch Changes
+
+- [#2581](https://github.com/Shopify/quilt/pull/2581) [`2781826fa`](https://github.com/Shopify/quilt/commit/2781826fac6a036eeb5da2aba15ce54b21d03ca9) Thanks [@BPScott](https://github.com/BPScott)! - Replace dependency on `@shopify/decorators` with `@shopify/function-enhancers`
+
 ## 2.0.1
 
 ### Patch Changes

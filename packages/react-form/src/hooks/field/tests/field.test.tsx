@@ -2,15 +2,11 @@ import React from 'react';
 import {faker} from '@faker-js/faker/locale/en';
 import {mount} from '@shopify/react-testing';
 
-import {
-  asChoiceField,
-  useChoiceField,
-  useField,
-  FieldConfig,
-  asChoiceList,
-} from '../field';
-import {FieldState} from '../../../types';
-import {FieldAction, reduceField, makeFieldReducer} from '../reducer';
+import type {FieldConfig} from '../field';
+import {asChoiceField, useChoiceField, useField, asChoiceList} from '../field';
+import type {FieldState} from '../../../types';
+import type {FieldAction} from '../reducer';
+import {reduceField, makeFieldReducer} from '../reducer';
 
 describe('useField', () => {
   function TestField({config}: {config: string | FieldConfig<string>}) {
@@ -103,11 +99,13 @@ describe('useField', () => {
       });
 
       it('runs validation if the field already has an error', () => {
+        /* eslint-disable jest/no-conditional-in-test */
         const fieldConfig = {
           value: 'old title',
           validates: (value: string) =>
             value.length < 10 ? 'not long enough' : undefined,
         };
+        /* eslint-enable jest/no-conditional-in-test */
         const wrapper = mount(<TestField config={fieldConfig} />);
 
         wrapper.find('input')!.trigger('onChange', changeEvent('not long'));
@@ -203,6 +201,7 @@ describe('useField', () => {
           const field = useField(config);
           const text = 'Test field';
 
+          /* eslint-disable jest/no-conditional-in-test */
           return (
             <>
               <label htmlFor="test-field">
@@ -218,6 +217,7 @@ describe('useField', () => {
               {field.allErrors && <p>{field.allErrors}</p>}
             </>
           );
+          /* eslint-enable jest/no-conditional-in-test */
         }
 
         const firstFailingValidator = (value: string) =>
@@ -251,7 +251,7 @@ describe('useField', () => {
         function TestField({config}: {config: string | FieldConfig<string>}) {
           const field = useField(config);
           const text = 'Test field';
-
+          /* eslint-disable jest/no-conditional-in-test */
           return (
             <>
               <label htmlFor="test-field">
@@ -267,6 +267,7 @@ describe('useField', () => {
               {field.allErrors && <p>{field.allErrors}</p>}
             </>
           );
+          /* eslint-enable jest/no-conditional-in-test */
         }
 
         const failingValidator = (value: string) => `${value} tastes most foul`;
@@ -299,6 +300,7 @@ describe('useField', () => {
           const field = useField(config);
           const text = 'Test field';
 
+          /* eslint-disable jest/no-conditional-in-test */
           return (
             <>
               <label htmlFor="test-field">
@@ -314,6 +316,7 @@ describe('useField', () => {
               {field.allErrors && <p>{field.allErrors}</p>}
             </>
           );
+          /* eslint-enable jest/no-conditional-in-test */
         }
 
         const fieldConfig = {
@@ -375,7 +378,7 @@ describe('useField', () => {
       }) {
         const field = useField(config);
         const text = 'Test field';
-
+        /* eslint-disable jest/no-conditional-in-test */
         return (
           <>
             <label htmlFor="test-field">
@@ -391,6 +394,7 @@ describe('useField', () => {
             {field.error && <p>{field.error}</p>}
           </>
         );
+        /* eslint-enable jest/no-conditional-in-test */
       }
 
       const wrapper = mount(<FooBarTestField config={{foo: 'bar'}} />);
@@ -436,14 +440,17 @@ describe('useField', () => {
     it('validators use latest version of dependencies', () => {
       let someOtherFieldValue = 'cool';
 
+      /* eslint-disable jest/no-conditional-in-test */
       const fieldConfig = {
         value: '',
         validates: (value) => {
           if (someOtherFieldValue === 'radical' && value === 'pants') {
             return 'no radical pants allowed';
           }
+          return undefined;
         },
       };
+      /* eslint-enable jest/no-conditional-in-test */
 
       const wrapper = mount(
         <DependenciesField

@@ -1,6 +1,6 @@
 import React from 'react';
-import {ApolloClient} from 'apollo-client';
-import {ApolloProvider as OriginalApolloProvider} from '@apollo/react-common';
+import type {ApolloClient} from '@apollo/client';
+import {ApolloProvider as OriginalApolloProvider} from '@apollo/client';
 
 import {ApolloContext} from './ApolloContext';
 

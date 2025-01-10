@@ -1,5 +1,74 @@
 # Changelog
 
+## 6.4.0
+
+### Minor Changes
+
+- [#2816](https://github.com/Shopify/quilt/pull/2816) [`4638287`](https://github.com/Shopify/quilt/commit/46382871c238fe6563e093697b508f500842b80d) Thanks [@admirsaheta](https://github.com/admirsaheta)! - - Allow `output.chunkFilename` to be a function or string.
+  - `compiler.options.output.filename` and `compiler.options.output.chunkFilename` now default to `[name].js` when undefined.
+
+## 6.3.1
+
+### Patch Changes
+
+- [#2835](https://github.com/Shopify/quilt/pull/2835) [`3a1077c`](https://github.com/Shopify/quilt/commit/3a1077c2d2d8a55797d83e330c5a9607e42da78b) Thanks [@jesstelford](https://github.com/jesstelford)! - Ensure the correct babel types are used internally
+
+## 6.3.0
+
+### Minor Changes
+
+- [#2791](https://github.com/Shopify/quilt/pull/2791) [`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892) Thanks [@vsumner](https://github.com/vsumner)! - Update typescript, eslint, and prettier
+
+## 6.2.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+## 6.1.2
+
+### Patch Changes
+
+- [#2767](https://github.com/Shopify/quilt/pull/2767) [`957132820`](https://github.com/Shopify/quilt/commit/9571328209ef77c247f957c68f63eb5c1c971a86) Thanks [@BPScott](https://github.com/BPScott)! - Allow webpack-virtual-modules ^0.6.0 as a peer dependency
+
+## 6.1.1
+
+### Patch Changes
+
+- [#2718](https://github.com/Shopify/quilt/pull/2718) [`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47) Thanks [@dependabot](https://github.com/apps/dependabot)! - Bump @babel/traverse from 7.17.9 to 7.23.2
+
+## 6.1.0
+
+### Minor Changes
+
+- [#2747](https://github.com/Shopify/quilt/pull/2747) [`f019b983e`](https://github.com/Shopify/quilt/commit/f019b983eb45d317468ca8a4b258192ac05fd0be) Thanks [@robin-drexler](https://github.com/robin-drexler)! - Allow to override worker public path
+
+## 6.0.5
+
+### Patch Changes
+
+- [#2654](https://github.com/Shopify/quilt/pull/2654) [`e470978cf`](https://github.com/Shopify/quilt/commit/e470978cfa2b4e147dde7a97fa57ad305c3daa1b) Thanks [@BPScott](https://github.com/BPScott)! - Widen peerDependency range for webpack-virtual-modules, to allow for v0.5.x
+
+## 6.0.4
+
+### Patch Changes
+
+- [#2630](https://github.com/Shopify/quilt/pull/2630) [`739988dc8`](https://github.com/Shopify/quilt/commit/739988dc8c3d76c9219ab54e27d993bd177a2d16) Thanks [@vsumner](https://github.com/vsumner)! - Expose `@shopify/web-worker/webpack-loader` export
+
+## 6.0.3
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+## 6.0.2
+
+### Patch Changes
+
+- [#2593](https://github.com/Shopify/quilt/pull/2593) [`2f731db68`](https://github.com/Shopify/quilt/commit/2f731db6883193d3d9fe9ada9374fb7d4d8a762f) Thanks [@BPScott](https://github.com/BPScott)! - Remove unneeded `void 0` class property initializations
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
 ## 6.0.1
 
 ### Patch Changes
@@ -80,7 +149,7 @@
 
 ### Changed
 
-- Replaced this package with the contents of [`@remote-ui/web-workers`](https://github.com/Shopify/remote-ui/tree/main/packages/web-workers) as of version `1.5.7`. This change was made in order to deprecate `@remote-ui/web-workers`; anyone who was previously using that package should move to depending on this one (`@shopify/web-worker`) instead.
+- Replaced this package with the contents of [`@remote-ui/web-workers`](https://github.com/Shopify/remote-dom/tree/667a04b5c0e618436781164a2546390c984dd8ec/packages/web-workers) as of version `1.5.7`. This change was made in order to deprecate `@remote-ui/web-workers`; anyone who was previously using that package should move to depending on this one (`@shopify/web-worker`) instead.
 
 ## 2.1.5 - 2021-09-24
 

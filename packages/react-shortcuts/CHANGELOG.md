@@ -1,5 +1,35 @@
 # Changelog
 
+## 5.2.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+- [#2787](https://github.com/Shopify/quilt/pull/2787) [`f50049004`](https://github.com/Shopify/quilt/commit/f500490042d922b66a6781c3450f876a83a120cb) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for React 17
+
+## 5.1.0
+
+### Minor Changes
+
+- [#2674](https://github.com/Shopify/quilt/pull/2674) [`11c3b1dfe`](https://github.com/Shopify/quilt/commit/11c3b1dfe5dfbc2ced7b76cba42d5b1a218ce090) Thanks [@alexandcote](https://github.com/alexandcote)! - Allow consumer to trigger shortcut
+
+## 5.0.4
+
+### Patch Changes
+
+- [#2611](https://github.com/Shopify/quilt/pull/2611) [`5d569d1cf`](https://github.com/Shopify/quilt/commit/5d569d1cf333ccc14fe5cf667abed203c07f527a) Thanks [@BPScott](https://github.com/BPScott)! - Adjust imports of internal types to adhere to TypeScript's verbatimModuleSyntax format. This does not affect externally presented types.
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+## 5.0.3
+
+### Patch Changes
+
+- [#2593](https://github.com/Shopify/quilt/pull/2593) [`2f731db68`](https://github.com/Shopify/quilt/commit/2f731db6883193d3d9fe9ada9374fb7d4d8a762f) Thanks [@BPScott](https://github.com/BPScott)! - Remove unneeded `void 0` class property initializations
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
 ## 5.0.2
 
 ### Patch Changes

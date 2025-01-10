@@ -1,4 +1,4 @@
-import {FieldDictionary, FieldStates} from '../../types';
+import type {FieldDictionary, FieldStates} from '../../types';
 
 import {
   addFieldItemAction,
@@ -7,7 +7,8 @@ import {
   removeFieldItemsAction,
   moveFieldItemAction,
 } from './hooks';
-import {useBaseList, FieldListConfig} from './baselist';
+import type {FieldListConfig} from './baselist';
+import {useBaseList} from './baselist';
 
 export interface DynamicList<Item extends object> {
   fields: FieldDictionary<Item>[];

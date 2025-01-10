@@ -1,4 +1,9 @@
-import React from 'react';
+import type {
+  ComponentType,
+  ComponentPropsWithoutRef,
+  HTMLAttributes,
+  LegacyRef,
+} from 'react';
 
 type IsNeverType<T> = [T] extends [never] ? true : false;
 type Rest<T extends any[]> = T extends [any, ...infer Rest] ? Rest : never;
@@ -20,33 +25,32 @@ type Merge<T> = {[K in keyof T]: PickTypeOf<T, K>} & {
 type IsArrayIndex<T extends string> = `${number}` extends T
   ? true
   : string extends T
-  ? true
-  : T extends `${infer Head}${infer Rest}`
-  ? Head extends '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
-    ? Rest extends ''
-      ? true
-      : IsArrayIndex<Rest>
-    : false
-  : false;
+    ? true
+    : T extends `${infer Head}${infer Rest}`
+      ? Head extends '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+        ? Rest extends ''
+          ? true
+          : IsArrayIndex<Rest>
+        : false
+      : false;
 
-type ExtractProperty<Props, PropKeys extends any[]> = Merge<
-  Extract<Props, object>
-> extends infer MergedProps
-  ? PropKeys[0] extends undefined
-    ? Props
-    : PropKeys[0] extends keyof MergedProps
-    ? IfNever<
-        Extract<MergedProps[PropKeys[0]], ReadonlyArray<any>>,
-        unknown
-      > extends ReadonlyArray<infer ArrayType>
-      ? PropKeys[1] extends undefined
-        ? MergedProps[PropKeys[0]]
-        : IsArrayIndex<PropKeys[1]> extends true
-        ? ExtractProperty<ArrayType, Rest<Rest<PropKeys>>>
+type ExtractProperty<Props, PropKeys extends any[]> =
+  Merge<Extract<Props, object>> extends infer MergedProps
+    ? PropKeys[0] extends undefined
+      ? Props
+      : PropKeys[0] extends keyof MergedProps
+        ? IfNever<
+            Extract<MergedProps[PropKeys[0]], ReadonlyArray<any>>,
+            unknown
+          > extends ReadonlyArray<infer ArrayType>
+          ? PropKeys[1] extends undefined
+            ? MergedProps[PropKeys[0]]
+            : IsArrayIndex<PropKeys[1]> extends true
+              ? ExtractProperty<ArrayType, Rest<Rest<PropKeys>>>
+              : never
+          : ExtractProperty<MergedProps[PropKeys[0]], Rest<PropKeys>>
         : never
-      : ExtractProperty<MergedProps[PropKeys[0]], Rest<PropKeys>>
-    : never
-  : never;
+    : never;
 
 type Split<
   String extends string,
@@ -54,28 +58,26 @@ type Split<
 > = string extends String
   ? string[]
   : String extends ''
-  ? []
-  : String extends `${infer T}${Delimiter}${infer U}`
-  ? [T, ...Split<U, Delimiter>]
-  : [String];
+    ? []
+    : String extends `${infer T}${Delimiter}${infer U}`
+      ? [T, ...Split<U, Delimiter>]
+      : [String];
 
 type NormalizeKeypath<Path extends string> =
   Path extends `${infer A}.[${infer B}].${infer C}`
     ? NormalizeKeypath<`${A}.${B}.${C}`>
     : Path extends `${infer A}[${infer B}].${infer C}`
-    ? NormalizeKeypath<`${A}.${B}.${C}`>
-    : Path extends `${infer A}[${infer B}]${infer C}`
-    ? NormalizeKeypath<`${A}.${B}.${C}`>
-    : Path;
+      ? NormalizeKeypath<`${A}.${B}.${C}`>
+      : Path extends `${infer A}[${infer B}]${infer C}`
+        ? NormalizeKeypath<`${A}.${B}.${C}`>
+        : Path;
 
-export type ExtractKeypath<Props, Keypath extends string> = ExtractProperty<
-  Props,
-  Split<NormalizeKeypath<Keypath>, '.'>
-> extends infer R
-  ? R extends KeyPathFunction
-    ? R
-    : never
-  : never;
+export type ExtractKeypath<Props, Keypath extends string> =
+  ExtractProperty<Props, Split<NormalizeKeypath<Keypath>, '.'>> extends infer R
+    ? R extends KeyPathFunction
+      ? R
+      : never
+    : never;
 
 type IfNever<C, F> = IsNeverType<C> extends true ? F : C;
 type IsUnknown<T> = unknown extends T
@@ -84,11 +86,8 @@ type IsUnknown<T> = unknown extends T
     : true
   : false;
 
-type IsSkippedType<Props, Path extends string> = IsUnknown<Props> extends true
-  ? true
-  : string extends Path
-  ? true
-  : false;
+type IsSkippedType<Props, Path extends string> =
+  IsUnknown<Props> extends true ? true : string extends Path ? true : false;
 
 export type KeyPathFunction = Function | ((...args: any[]) => any);
 
@@ -96,37 +95,38 @@ export type TriggerKeypathParams<
   Props,
   Path extends string,
   ExtractedFunction extends KeyPathFunction,
-> = IsSkippedType<Props, Path> extends false
-  ? [
-      keypath: IsNeverType<ExtractedFunction> extends true ? never : Path,
-      ...args: ExtractedFunction extends (...args: any[]) => any
-        ? DeepPartialArguments<Parameters<ExtractedFunction>>
-        : any[],
-    ]
-  : [keypath: string, ...args: unknown[]];
+> =
+  IsSkippedType<Props, Path> extends false
+    ? [
+        keypath: IsNeverType<ExtractedFunction> extends true ? never : Path,
+        ...args: ExtractedFunction extends (...args: any[]) => any
+          ? DeepPartialArguments<Parameters<ExtractedFunction>>
+          : any[],
+      ]
+    : [keypath: string, ...args: unknown[]];
 
 export type TriggerKeypathReturn<
   Props,
   Path extends string,
   ExtractedFunction extends KeyPathFunction,
-> = IsSkippedType<Props, Path> extends false
-  ? ExtractedFunction extends (...args: any[]) => any
-    ? ReturnType<ExtractedFunction>
-    : any
-  : any;
+> =
+  IsSkippedType<Props, Path> extends false
+    ? ExtractedFunction extends (...args: any[]) => any
+      ? ReturnType<ExtractedFunction>
+      : any
+    : any;
 
-export type PropsFor<T extends string | React.ComponentType<any>> =
-  T extends string
-    ? T extends keyof JSX.IntrinsicElements
-      ? JSX.IntrinsicElements[T]
-      : React.HTMLAttributes<T>
-    : T extends React.ComponentType<any>
-    ? React.ComponentPropsWithoutRef<T>
+export type PropsFor<T extends string | ComponentType<any>> = T extends string
+  ? T extends keyof JSX.IntrinsicElements
+    ? JSX.IntrinsicElements[T]
+    : HTMLAttributes<T>
+  : T extends ComponentType<any>
+    ? ComponentPropsWithoutRef<T>
     : never;
 
 export type UnknowablePropsFor<
-  T extends string | React.ComponentType<any> | unknown,
-> = T extends string | React.ComponentType<any> ? PropsFor<T> : unknown;
+  T extends string | ComponentType<any> | unknown,
+> = T extends string | ComponentType<any> ? PropsFor<T> : unknown;
 
 export type FunctionKeys<T> = {
   [K in keyof T]-?: NonNullable<T[K]> extends (...args: any[]) => any
@@ -141,10 +141,10 @@ type DeepPartialObject<T extends object> = {[K in keyof T]?: DeepPartial<T[K]>};
 type DeepPartial<T> = T extends (infer U)[]
   ? DeepPartialArray<U>
   : T extends ReadonlyArray<infer U>
-  ? DeepPartialReadonlyArray<U>
-  : T extends object
-  ? DeepPartialObject<T>
-  : T;
+    ? DeepPartialReadonlyArray<U>
+    : T extends object
+      ? DeepPartialObject<T>
+      : T;
 
 export type DeepPartialArguments<T> = {
   [K in keyof T]?: DeepPartial<T[K]>;
@@ -176,32 +176,28 @@ export enum Tag {
 export interface Fiber {
   tag: Tag;
   key: null | string;
-  elementType: React.ComponentType | string | null;
-  type: React.ComponentType | string | null;
+  elementType: ComponentType | string | null;
+  type: ComponentType | string | null;
   stateNode: any;
   return: Fiber | null;
   child: Fiber | null;
   sibling: Fiber | null;
   index: number;
-  ref: React.LegacyRef<unknown>;
+  ref: LegacyRef<unknown>;
   pendingProps: unknown;
   memoizedProps: unknown;
   memoizedState: unknown;
 }
 
-export type ReactInstance =
-  | {
-      _reactInternals: Fiber;
-    }
-  | {
-      _reactInternalFiber: Fiber;
-    };
+export interface ReactInstance {
+  _reactInternals: Fiber;
+}
 
 export type Predicate = (node: Node<unknown>) => boolean;
 
 export interface Node<Props extends {} | unknown> {
   readonly props: Props;
-  readonly type: string | React.ComponentType<any> | null;
+  readonly type: string | ComponentType<any> | null;
   readonly isDOM: boolean;
   readonly instance: any;
   readonly children: Node<unknown>[];
@@ -215,15 +211,15 @@ export interface Node<Props extends {} | unknown> {
   text(): string;
   html(): string;
 
-  is<Type extends React.ComponentType<any> | string>(
+  is<Type extends ComponentType<any> | string>(
     type: Type,
   ): this is Node<PropsFor<Type>>;
 
-  find<Type extends React.ComponentType<any> | string>(
+  find<Type extends ComponentType<any> | string>(
     type: Type,
     props?: Partial<PropsFor<Type>>,
   ): Node<PropsFor<Type>> | null;
-  findAll<Type extends React.ComponentType<any> | string>(
+  findAll<Type extends ComponentType<any> | string>(
     type: Type,
     props?: Partial<PropsFor<Type>>,
   ): Node<PropsFor<Type>>[];

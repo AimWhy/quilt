@@ -1,5 +1,42 @@
 # Changelog
 
+## 9.3.1
+
+### Patch Changes
+
+- [#2795](https://github.com/Shopify/quilt/pull/2795) [`8fa47ffa2`](https://github.com/Shopify/quilt/commit/8fa47ffa22bfdd98c9dc8f94e0ab913d7fef1ba0) Thanks [@iAmNathanJ](https://github.com/iAmNathanJ)! - fix: babel transformations for node targets
+
+## 9.3.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece)]:
+  - @shopify/network@3.3.0
+
+## 9.2.0
+
+### Minor Changes
+
+- [#2600](https://github.com/Shopify/quilt/pull/2600) [`54f199856`](https://github.com/Shopify/quilt/commit/54f199856dab52d3f0415243b71d4d51d46038cb) Thanks [@alexandcote](https://github.com/alexandcote)! - Enabling manifest caching per manifest path.
+
+- [#2600](https://github.com/Shopify/quilt/pull/2600) [`c6f5d2f3d`](https://github.com/Shopify/quilt/commit/c6f5d2f3d839ddecdb70010dc7c777dd4f5d7e7a) Thanks [@alexandcote](https://github.com/alexandcote)! - Add a new key option on the assets middleware to allow multiple assets middleware in one server
+
+### Patch Changes
+
+- [#2601](https://github.com/Shopify/quilt/pull/2601) [`40423a88d`](https://github.com/Shopify/quilt/commit/40423a88d022ac26a6549096bb2e42aeab08c42d) Thanks [@alexandcote](https://github.com/alexandcote)! - Update `browserslist-useragent` to version `^4.0.0`
+
+## 9.1.1
+
+### Patch Changes
+
+- [#2593](https://github.com/Shopify/quilt/pull/2593) [`2f731db68`](https://github.com/Shopify/quilt/commit/2f731db6883193d3d9fe9ada9374fb7d4d8a762f) Thanks [@BPScott](https://github.com/BPScott)! - Remove unneeded `void 0` class property initializations
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
 ## 9.1.0
 
 ### Minor Changes

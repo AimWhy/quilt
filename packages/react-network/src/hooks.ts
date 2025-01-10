@@ -1,10 +1,12 @@
 import {useContext} from 'react';
-import {parse, Language} from 'accept-language-parser';
-import {CspDirective, StatusCode, Header} from '@shopify/network';
+import type {Language} from 'accept-language-parser';
+import {parse} from 'accept-language-parser';
+import type {CspDirective, StatusCode} from '@shopify/network';
+import {Header} from '@shopify/network';
 import {useServerEffect} from '@shopify/react-effect';
 
 import {NetworkContext, NetworkUniversalContext} from './context';
-import {NetworkManager} from './manager';
+import type {NetworkManager} from './manager';
 
 const NO_UNIVERSAL_PROVIDER_WARNING =
   'Could not find serialized network context. Ensure that your app is rendering <NetworkUniversalProvider /> above in your tree';

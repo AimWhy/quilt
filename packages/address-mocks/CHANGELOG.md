@@ -1,5 +1,69 @@
 # Changelog
 
+## 3.3.1
+
+### Patch Changes
+
+- Updated dependencies [[`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892)]:
+  - @shopify/jest-dom-mocks@5.2.0
+
+## 3.3.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece)]:
+  - @shopify/address-consts@4.2.0
+  - @shopify/jest-dom-mocks@5.1.0
+
+## 3.2.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/jest-dom-mocks@5.0.1
+
+## 3.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`db05ac6d1`](https://github.com/Shopify/quilt/commit/db05ac6d1fc57a126d30cf50476dd92d279974ea)]:
+  - @shopify/jest-dom-mocks@5.0.0
+
+## 3.2.1
+
+### Patch Changes
+
+- Updated dependencies [[`d1b6a3c02`](https://github.com/Shopify/quilt/commit/d1b6a3c0264abfc232166638df8a88164d6db8a3)]:
+  - @shopify/jest-dom-mocks@4.2.0
+
+## 3.2.0
+
+### Minor Changes
+
+- [#2522](https://github.com/Shopify/quilt/pull/2522) [`f0359c52c`](https://github.com/Shopify/quilt/commit/f0359c52c51c96078ac9e1902411fd1f3df2bc42) Thanks [@cejaekl](https://github.com/cejaekl)! - Add the ability to handle the `includeHiddenZones` variable in `mockCountryRequests()`
+
+## 3.1.7
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+- Updated dependencies [[`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86)]:
+  - @shopify/jest-dom-mocks@4.1.2
+
+## 3.1.6
+
+### Patch Changes
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
+- Updated dependencies [[`2f731db68`](https://github.com/Shopify/quilt/commit/2f731db6883193d3d9fe9ada9374fb7d4d8a762f), [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f)]:
+  - @shopify/jest-dom-mocks@4.1.1
+
 ## 3.1.5
 
 ### Patch Changes

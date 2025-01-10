@@ -2,8 +2,6 @@
  * @jest-environment node
  */
 
-import '../matchers';
-
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {extract, Effect} from '@shopify/react-effect/server';
@@ -88,12 +86,14 @@ describe('server', () => {
 
   it('extracts async translations', async () => {
     const manager = new I18nManager({locale: 'fr-CA'});
+    /* eslint-disable jest/no-conditional-in-test */
     const element = (
       <I18nContext.Provider value={manager}>
         <WithAsyncI18nComponent />
         <Effect perform={() => manager.loading && manager.resolve()} />
       </I18nContext.Provider>
     );
+    /* eslint-enable jest/no-conditional-in-test */
 
     await extract(element);
     const markup = renderToStaticMarkup(element);
@@ -103,13 +103,13 @@ describe('server', () => {
     const translations = manager.extract();
 
     const extractedTranslations = Object.values(translations);
-    expect(Object.keys(translations)).toBeArrayOfUniqueItems();
     expect(extractedTranslations).toContain(frCATranslations);
     expect(extractedTranslations).toContain(frTranslations);
   });
 
   it('handles nested translation connections', async () => {
     const manager = new I18nManager({locale: 'fr'});
+    /* eslint-disable jest/no-conditional-in-test */
     const element = (
       <I18nContext.Provider value={manager}>
         <WithAsyncI18nComponent>
@@ -118,6 +118,7 @@ describe('server', () => {
         <Effect perform={() => manager.loading && manager.resolve()} />
       </I18nContext.Provider>
     );
+    /* eslint-enable jest/no-conditional-in-test */
 
     await extract(element);
     const markup = renderToStaticMarkup(element);

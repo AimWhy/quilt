@@ -1,14 +1,13 @@
 import React from 'react';
+import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import type {Root as ReactRoot} from 'react-dom/client';
-import {act} from 'react-dom/test-utils';
 import {findCurrentFiberUsingSlowPath} from 'react-reconciler/reflection.js';
 
 import {TestWrapper} from './TestWrapper';
 import {Element} from './element';
-import {createRoot, getInternals, enqueueTask, isLegacyReact} from './compat';
-import {
-  Tag,
+import {act} from './compat';
+import type {
   Fiber,
   Node,
   Predicate,
@@ -21,6 +20,7 @@ import {
   KeyPathFunction,
   ExtractKeypath,
 } from './types';
+import {Tag} from './types';
 
 type ResolveRoot = (element: Element<unknown>) => Element<unknown> | null;
 type Render = (
@@ -79,7 +79,7 @@ export class Root<Props> implements Node<Props> {
   private resolveRoot: ResolveRoot;
 
   private get mounted() {
-    return this.wrapper != null;
+    return this.wrapper != null && this.wrapper.rootRef != null;
   }
 
   constructor(
@@ -311,11 +311,6 @@ export class Root<Props> implements Node<Props> {
     this.destroyed = true;
     await mountedPromise;
     this.actCallbacks.forEach((callback) => callback());
-
-    if (isLegacyReact) {
-      // flush macro task for react 17 only
-      await new Promise((resolve) => enqueueTask(resolve));
-    }
   }
 
   setProps(props: Partial<Props>) {
@@ -340,8 +335,8 @@ export class Root<Props> implements Node<Props> {
   private update() {
     if (this.wrapper == null) {
       this.root = null;
-    } else {
-      const rootFiber = getInternals(this.wrapper.rootRef as any);
+    } else if (this.mounted) {
+      const rootFiber = (this.wrapper.rootRef as any)._reactInternals;
       const topElement = fiberToElement(
         findCurrentFiberUsingSlowPath(rootFiber),
         this,
@@ -352,7 +347,7 @@ export class Root<Props> implements Node<Props> {
   }
 
   private ensureRoot() {
-    if (this.wrapper == null || this.root == null) {
+    if (!this.mounted || this.root == null) {
       throw new Error(
         'Attempted to operate on a mounted tree, but the component is no longer mounted',
       );

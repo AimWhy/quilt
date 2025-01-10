@@ -3,6 +3,7 @@ import {faker} from '@faker-js/faker/locale/en';
 import {mount} from '@shopify/react-testing';
 import {fetch, timer, connection} from '@shopify/jest-dom-mocks';
 import {Method, Header} from '@shopify/network';
+import {Navigation, NavigationResult} from '@shopify/performance';
 
 import {PerformanceReport, PerformanceContext} from '..';
 
@@ -24,7 +25,7 @@ describe('<PerformanceReport />', () => {
 
   it('sends a report to the given url when a navigation event occurs', () => {
     const performance = mockPerformance();
-    const url = faker.internet.url();
+    const url = faker.internet.url({appendSlash: true});
 
     mount(
       <PerformanceContext.Provider value={performance}>
@@ -37,7 +38,7 @@ describe('<PerformanceReport />', () => {
 
     const [fetchedUrl, request] = fetch.lastCall()!;
     const {body, method, headers} = request!;
-    expect(fetchedUrl).toBe(`${url}/`);
+    expect(fetchedUrl).toBe(url);
     expect(method).toBe(Method.Post);
     expect(headers).toHaveProperty(Header.ContentType, 'application/json');
     expect(JSON.parse(body!.toString())).toMatchObject({
@@ -52,7 +53,7 @@ describe('<PerformanceReport />', () => {
 
   it('sends a report to the given url when a lifeCycleEvent event occurs', () => {
     const performance = mockPerformance();
-    const url = faker.internet.url();
+    const url = faker.internet.url({appendSlash: true});
 
     mount(
       <PerformanceContext.Provider value={performance}>
@@ -65,7 +66,7 @@ describe('<PerformanceReport />', () => {
 
     const [fetchedUrl, request] = fetch.lastCall()!;
     const {body, method, headers} = request!;
-    expect(fetchedUrl).toBe(`${url}/`);
+    expect(fetchedUrl).toBe(url);
     expect(method).toBe(Method.Post);
     expect(headers).toHaveProperty(Header.ContentType, 'application/json');
     expect(JSON.parse(body!.toString())).toMatchObject({
@@ -144,6 +145,80 @@ describe('<PerformanceReport />', () => {
     const {body} = request!;
     expect(JSON.parse(body!.toString())).toMatchObject({
       locale: 'zh-CN',
+    });
+  });
+
+  it('excludes cancelled navigations by default', () => {
+    const performance = mockPerformance();
+    const url = faker.internet.url();
+
+    mount(
+      <PerformanceContext.Provider value={performance}>
+        <PerformanceReport url={url} />
+      </PerformanceContext.Provider>,
+    );
+
+    performance.simulateNavigation(
+      new Navigation(
+        {
+          start: 0,
+          duration: 100,
+          target: '/foo',
+          events: [],
+          result: NavigationResult.Cancelled,
+        },
+        {
+          index: 0,
+          supportsDetailedEvents: true,
+          supportsDetailedTime: true,
+        },
+      ),
+    );
+    timer.runAllTimers();
+
+    expect(fetch.lastCall()).toBeUndefined();
+  });
+
+  it('supports opt-in to cancelled navigations', () => {
+    const performance = mockPerformance();
+    const url = faker.internet.url({appendSlash: true});
+
+    mount(
+      <PerformanceContext.Provider value={performance}>
+        <PerformanceReport url={url} finishedNavigationsOnly={false} />
+      </PerformanceContext.Provider>,
+    );
+
+    const navigation = performance.simulateNavigation(
+      new Navigation(
+        {
+          start: 0,
+          duration: 100,
+          target: '/foo',
+          events: [],
+          result: NavigationResult.Cancelled,
+        },
+        {
+          index: 0,
+          supportsDetailedEvents: true,
+          supportsDetailedTime: true,
+        },
+      ),
+    );
+    timer.runAllTimers();
+
+    const [fetchedUrl, request] = fetch.lastCall()!;
+    const {body, method, headers} = request!;
+    expect(fetchedUrl).toBe(url);
+    expect(method).toBe(Method.Post);
+    expect(headers).toHaveProperty(Header.ContentType, 'application/json');
+    expect(JSON.parse(body!.toString())).toMatchObject({
+      navigations: [
+        {
+          details: navigation.toJSON({removeEventMetadata: false}),
+          metadata: navigation.metadata,
+        },
+      ],
     });
   });
 });

@@ -1,5 +1,187 @@
 # Changelog
 
+## 5.2.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-async@5.5.3
+  - @shopify/react-cookie@2.1.4
+  - @shopify/react-hydrate@3.1.4
+  - @shopify/react-network@5.2.3
+  - @shopify/react-html@13.2.3
+
+## 5.2.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-async@5.5.2
+  - @shopify/react-cookie@2.1.3
+  - @shopify/react-hydrate@3.1.3
+  - @shopify/react-network@5.2.2
+  - @shopify/react-html@13.2.2
+
+## 5.2.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-async@5.5.1
+  - @shopify/react-cookie@2.1.2
+  - @shopify/react-hydrate@3.1.2
+  - @shopify/react-network@5.2.1
+  - @shopify/react-html@13.2.1
+
+## 5.2.0
+
+### Minor Changes
+
+- [#2791](https://github.com/Shopify/quilt/pull/2791) [`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892) Thanks [@vsumner](https://github.com/vsumner)! - Update typescript, eslint, and prettier
+
+### Patch Changes
+
+- Updated dependencies [[`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892)]:
+  - @shopify/react-network@5.2.0
+  - @shopify/react-effect@5.2.0
+  - @shopify/react-async@5.5.0
+  - @shopify/react-html@13.2.0
+  - @shopify/react-cookie@2.1.1
+  - @shopify/react-hydrate@3.1.1
+
+## 5.1.1
+
+### Patch Changes
+
+- Updated dependencies [[`8fa47ffa2`](https://github.com/Shopify/quilt/commit/8fa47ffa22bfdd98c9dc8f94e0ab913d7fef1ba0)]:
+  - @shopify/sewing-kit-koa@9.3.1
+
+## 5.1.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece), [`f50049004`](https://github.com/Shopify/quilt/commit/f500490042d922b66a6781c3450f876a83a120cb)]:
+  - @shopify/network@3.3.0
+  - @shopify/react-async@5.4.0
+  - @shopify/react-cookie@2.1.0
+  - @shopify/react-effect@5.1.0
+  - @shopify/react-html@13.1.0
+  - @shopify/react-hydrate@3.1.0
+  - @shopify/react-network@5.1.0
+  - @shopify/sewing-kit-koa@9.3.0
+
+## 5.0.3
+
+### Patch Changes
+
+- [#2718](https://github.com/Shopify/quilt/pull/2718) [`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47) Thanks [@dependabot](https://github.com/apps/dependabot)! - Bump @babel/traverse from 7.17.9 to 7.23.2
+
+- Updated dependencies [[`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47)]:
+  - @shopify/react-async@5.3.2
+  - @shopify/react-cookie@2.0.17
+  - @shopify/react-html@13.0.8
+  - @shopify/react-hydrate@3.0.12
+  - @shopify/react-network@5.0.17
+
+## 5.0.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-async@5.3.1
+  - @shopify/react-cookie@2.0.16
+  - @shopify/react-hydrate@3.0.11
+  - @shopify/react-network@5.0.16
+  - @shopify/react-html@13.0.7
+
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [[`20cbe440a`](https://github.com/Shopify/quilt/commit/20cbe440a03a7b6c66f43cece9fa4db0d2c7c5c6)]:
+  - @shopify/react-async@5.3.0
+
+## 5.0.0
+
+### Major Changes
+
+- [#2659](https://github.com/Shopify/quilt/pull/2659) [`c67ce27c1`](https://github.com/Shopify/quilt/commit/c67ce27c13ac13b0a5ac760bf1614b123b35556b) Thanks [@patrickracicot](https://github.com/patrickracicot)! - Updates React.hydrate -> React.hydrateRoot
+
+  Marking this as breaking change as it will require consumers to upgrade to React 18.
+
+  Hydrating has been updated to support React.hydrateRoot. Apps that do not yet support React 18 will need to update to React 18 before updating to this version.
+  React 18 supports concurrent rendering, which requires a new API for hydrating the server-rendered HTML. This PR updates the `react-server` package to use the new API.
+
+## 4.1.8
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-async@5.2.3
+  - @shopify/react-cookie@2.0.15
+  - @shopify/react-hydrate@3.0.10
+  - @shopify/react-network@5.0.15
+  - @shopify/react-html@13.0.6
+
+## 4.1.7
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+- Updated dependencies [[`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86)]:
+  - @shopify/react-async@5.2.2
+  - @shopify/react-html@13.0.5
+  - @shopify/react-network@5.0.14
+  - @shopify/react-cookie@2.0.14
+  - @shopify/react-hydrate@3.0.9
+
+## 4.1.6
+
+### Patch Changes
+
+- Updated dependencies [[`54f199856`](https://github.com/Shopify/quilt/commit/54f199856dab52d3f0415243b71d4d51d46038cb), [`c6f5d2f3d`](https://github.com/Shopify/quilt/commit/c6f5d2f3d839ddecdb70010dc7c777dd4f5d7e7a), [`40423a88d`](https://github.com/Shopify/quilt/commit/40423a88d022ac26a6549096bb2e42aeab08c42d)]:
+  - @shopify/sewing-kit-koa@9.2.0
+
+## 4.1.5
+
+### Patch Changes
+
+- [#2593](https://github.com/Shopify/quilt/pull/2593) [`2f731db68`](https://github.com/Shopify/quilt/commit/2f731db6883193d3d9fe9ada9374fb7d4d8a762f) Thanks [@BPScott](https://github.com/BPScott)! - Remove unneeded `void 0` class property initializations
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
+- Updated dependencies [[`2f731db68`](https://github.com/Shopify/quilt/commit/2f731db6883193d3d9fe9ada9374fb7d4d8a762f), [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f)]:
+  - @shopify/react-async@5.2.1
+  - @shopify/react-effect@5.0.3
+  - @shopify/react-network@5.0.13
+  - @shopify/sewing-kit-koa@9.1.1
+  - @shopify/react-cookie@2.0.13
+  - @shopify/react-html@13.0.4
+  - @shopify/react-hydrate@3.0.8
+
+## 4.1.4
+
+### Patch Changes
+
+- Updated dependencies [[`bd204450f`](https://github.com/Shopify/quilt/commit/bd204450f847fa4f929ffc70ce9755a9b91c9118)]:
+  - @shopify/react-async@5.2.0
+
+## 4.1.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @shopify/react-async@5.1.1
+  - @shopify/react-cookie@2.0.12
+  - @shopify/react-hydrate@3.0.7
+  - @shopify/react-network@5.0.12
+  - @shopify/react-html@13.0.3
+
 ## 4.1.2
 
 ### Patch Changes

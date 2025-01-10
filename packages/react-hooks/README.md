@@ -1,5 +1,13 @@
 # `@shopify/react-hooks`
 
+> [!CAUTION]
+>
+> `@shopify/react-hooks` is deprecated.
+>
+> Shopifolk, see
+> [Shopify/quilt-internal](https://github.com/shopify/quilt-internal) for
+> information on the latest packages available for use internally.
+
 [![Build Status](https://github.com/Shopify/quilt/workflows/Node-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ANode-CI)
 [![Build Status](https://github.com/Shopify/quilt/workflows/Ruby-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ARuby-CI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md) [![npm version](https://badge.fury.io/js/%40shopify%2Freact-hooks.svg)](https://badge.fury.io/js/%40shopify%2Freact-hooks.svg) [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/@shopify/react-hooks.svg)](https://img.shields.io/bundlephobia/minzip/@shopify/react-hooks.svg)
@@ -242,7 +250,7 @@ function Score({value}) {
 
 ### `useToggle()`
 
-This hook provides an object that contains a boolean state value and a set of memoised callbacks to toggle it, force it to true, and force it to false. It accepts one argument that is the initial value of the state. This is useful for toggling the active state of modals and popovers.
+This hook provides an object that contains a boolean state value and a set of memoised callbacks to toggle it, force it to true, and force it to false. It accepts one argument that is the initial value of the state or an initializer function returning the initial value. This is useful for toggling the active state of modals and popovers.
 
 ```tsx
 function MyComponent() {

@@ -7,6 +7,8 @@ import {I18nContext, I18nManager} from '@shopify/react-i18n';
 
 import {I18nUniversalProvider} from '../I18nUniversalProvider';
 
+const allLocales = ['en', 'fr', 'de', 'es', 'pt_BR'];
+
 const mount = createMount<{htmlManager?: HtmlManager}>({
   render: (element, _, {htmlManager = new HtmlManager()}) => (
     <HtmlContext.Provider value={htmlManager}>{element}</HtmlContext.Provider>
@@ -15,9 +17,9 @@ const mount = createMount<{htmlManager?: HtmlManager}>({
 
 describe('<I18nUniversalProvider />', () => {
   it('renders an I18nContext and creates an I18nManager using the given data', () => {
-    const locale = faker.random.locale();
+    const locale = faker.helpers.arrayElement(allLocales);
     const currency = faker.finance.currencyCode();
-    const country = faker.address.country();
+    const country = faker.location.country();
     const timezone = faker.lorem.word();
 
     const i18n = mount(
@@ -45,9 +47,9 @@ describe('<I18nUniversalProvider />', () => {
 
   it('serializes i18n details and reuses them', async () => {
     const htmlManager = new HtmlManager();
-    const locale = faker.random.locale();
+    const locale = faker.helpers.arrayElement(allLocales);
     const currency = faker.finance.currencyCode();
-    const country = faker.address.country();
+    const country = faker.location.country();
     const timezone = faker.lorem.word();
 
     await extract(
@@ -83,9 +85,9 @@ describe('<I18nUniversalProvider />', () => {
 
   it('overrides serialized data with defined overrides', async () => {
     const htmlManager = new HtmlManager();
-    const locale = faker.random.locale();
+    const locale = faker.helpers.arrayElement(allLocales);
     const currency = faker.finance.currencyCode();
-    const country = faker.address.country();
+    const country = faker.location.country();
     const timezone = faker.lorem.word();
 
     await extract(
@@ -105,9 +107,9 @@ describe('<I18nUniversalProvider />', () => {
     );
 
     const overrideDetails = {
-      locale: faker.random.locale(),
+      locale: faker.helpers.arrayElement(allLocales),
       currency: undefined,
-      country: faker.address.country(),
+      country: faker.location.country(),
       timezone: undefined,
     };
     const i18n = mount(<I18nUniversalProvider {...overrideDetails} />, {

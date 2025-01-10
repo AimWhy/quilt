@@ -1,6 +1,7 @@
-import React, {useRef, ReactNode, ComponentProps} from 'react';
-import {Client} from '@bugsnag/js';
-import {BugsnagErrorBoundary} from '@bugsnag/plugin-react';
+import type {ReactNode, ComponentProps} from 'react';
+import React, {useRef} from 'react';
+import type {Client} from '@bugsnag/js';
+import type {BugsnagErrorBoundary} from '@bugsnag/plugin-react';
 
 import {ErrorLoggerContext, noopErrorLogger} from './context';
 

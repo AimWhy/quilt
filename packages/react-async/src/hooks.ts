@@ -1,11 +1,11 @@
 import {useState, useCallback, useContext} from 'react';
-import {Resolver} from '@shopify/async';
+import type {Resolver} from '@shopify/async';
 import {useServerEffect} from '@shopify/react-effect';
 import {useMountedRef} from '@shopify/react-hooks';
-import {IfAllOptionalKeys, NoInfer} from '@shopify/useful-types';
+import type {IfAllOptionalKeys, NoInfer} from '@shopify/useful-types';
 
 import {AsyncAssetContext} from './context/assets';
-import {AssetTiming, AsyncComponentType} from './types';
+import type {AssetTiming, AsyncComponentType} from './types';
 
 export type Preloadable<PreloadOptions extends object> = Pick<
   AsyncComponentType<any, any, PreloadOptions, any, any>,
@@ -28,7 +28,7 @@ export function usePreload<PreloadOptions extends object>(
     [Preloadable<PreloadOptions>, PreloadOptions?],
     [Preloadable<PreloadOptions>, NoInfer<PreloadOptions>]
   >
-): ReturnType<typeof args[0]['usePreload']> {
+): ReturnType<(typeof args)[0]['usePreload']> {
   const [preloadable, options = {}] = args;
   return (preloadable.usePreload as any)(options);
 }
@@ -39,7 +39,7 @@ export function usePrefetch<PrefetchOptions extends object>(
     [Prefetchable<PrefetchOptions>, PrefetchOptions?],
     [Prefetchable<PrefetchOptions>, NoInfer<PrefetchOptions>]
   >
-): ReturnType<typeof args[0]['usePrefetch']> {
+): ReturnType<(typeof args)[0]['usePrefetch']> {
   const [prefetchable, options = {}] = args;
   return (prefetchable.usePrefetch as any)(options);
 }
@@ -50,7 +50,7 @@ export function useKeepFresh<KeepFreshOptions extends object>(
     [KeepFreshable<KeepFreshOptions>, KeepFreshOptions?],
     [KeepFreshable<KeepFreshOptions>, NoInfer<KeepFreshOptions>]
   >
-): ReturnType<typeof args[0]['useKeepFresh']> {
+): ReturnType<(typeof args)[0]['useKeepFresh']> {
   const [keepFreshable, options = {}] = args;
   return (keepFreshable.useKeepFresh as any)(options);
 }

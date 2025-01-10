@@ -1,7 +1,7 @@
 import {useMemo, useEffect} from 'react';
 import isEqual from 'fast-deep-equal';
 
-import {
+import type {
   ValidationDictionary,
   NormalizedValidationDictionary,
   FieldDictionary,
@@ -10,10 +10,10 @@ import {
 import {mapObject, normalizeValidation} from '../../utilities';
 import {useDirty} from '../dirty';
 
+import type {ListAction} from './hooks';
 import {
   useHandlers,
   useListReducer,
-  ListAction,
   reinitializeAction,
   resetListAction,
 } from './hooks';

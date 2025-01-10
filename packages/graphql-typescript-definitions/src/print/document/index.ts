@@ -1,21 +1,22 @@
 import * as t from '@babel/types';
-import {GraphQLObjectType} from 'graphql';
-import {
-  AST,
-  Fragment,
-  isTypedVariable,
-  Operation,
-  OperationType,
-} from 'graphql-tool-utilities';
+import type {GraphQLObjectType} from 'graphql';
+import type {AST, Fragment, Operation} from 'graphql-tool-utilities';
+import {isTypedVariable, OperationType} from 'graphql-tool-utilities';
+import babelGenerator from '@babel/generator';
 
 import {ExportFormat} from '../../types';
 
-import {Options, FileContext, OperationContext} from './context';
+import type {Options} from './context';
+import {FileContext, OperationContext} from './context';
 import {ObjectStack} from './utilities';
 import {tsInterfaceBodyForObjectField, variablesInterface} from './language';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const generate = require('@babel/generator').default;
+// The version of @babel/generator we depend on has a strange build process
+// that doesn’t work consistently in ESM and non-ESM consumers. This hacky bit of
+// code makes sure we get the actual `generate()` function in both runtimes.
+const generate: typeof babelGenerator =
+  (babelGenerator as any as {default: typeof babelGenerator}).default ??
+  babelGenerator;
 
 export interface File {
   path: string;

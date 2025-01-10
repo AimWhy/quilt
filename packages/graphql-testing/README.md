@@ -1,5 +1,13 @@
 # `@shopify/graphql-testing`
 
+> [!CAUTION]
+>
+> `@shopify/graphql-testing` is deprecated.
+>
+> Shopifolk, see
+> [Shopify/quilt-internal](https://github.com/shopify/quilt-internal) for
+> information on the latest packages available for use internally.
+
 [![Build Status](https://github.com/Shopify/quilt/workflows/Node-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ANode-CI)
 [![Build Status](https://github.com/Shopify/quilt/workflows/Ruby-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ARuby-CI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md) [![npm version](https://badge.fury.io/js/%40shopify%2Fgraphql-testing.svg)](https://badge.fury.io/js/%40shopify%2Fgraphql-testing.svg)
@@ -17,11 +25,13 @@ yarn add @shopify/graphql-testing
 
 ## Usage
 
-The default utility exported by this library is `createGraphQLFactory`. This factory accepts an optional options argument that allows you to pass a `unionOrIntersectionTypes` array and/ or additional `cacheOptions` that will be used to construct an Apollo in-memory cache and/ or `links` which can contain `ApolloLink`s that will be passed to the apollo client links.
+The default utility exported by this library is `createGraphQLFactory`. This factory accepts an optional options argument that allows you to pass a `cacheOptions` that will be used to construct an Apollo in-memory cache and/ or `links` which can contain `ApolloLink`s that will be passed to the apollo client links.
 
 ```js
 const createGraphQL = createGraphQLFactory({
-  unionOrIntersectionTypes: [],
+  cacheOptions: {
+    possibleTypes: {},
+  },
 });
 ```
 
@@ -40,22 +50,24 @@ The call to the function returned by `createGraphQLFactory` (`createGraphQL` in 
 
 The following method and properties are available on the `GraphQL` object:
 
-#### `resolveAll()`
+#### `resolveNext()`
+
+_Note:_ Prefer `graphQL.resolveAll()` over this for almost all use cases.
 
 By default, the mock client will hold all the graphQL operations triggered by your application in a pending state. To resolve all pending graphQL operations, call `graphQL.resolveAll()`, which returns a promise that resolves once all the operations have completed.
 
 ```js
-await graphQL.resolveAll();
+await graphQL.resolveNext();
 ```
 
-You can also pass a `query`, `mutation` or `filter` option to `resolveAll`. `query` and `mutation` will filter the pending operations and only resolve the ones with a matching operation. `filter` allows you to write your own custom filter function based upon the operation, for instace this will allow you to filter by the variables passed to the query. If `filter` is passed in addition to `query` or `mutation` then both filters shall be applied.
+You can also pass a `query`, `mutation` or `filter` option to `resolveNext`. `query` and `mutation` will filter the pending operations and only resolve the ones with a matching operation. `filter` allows you to write your own custom filter function based upon the operation, for instace this will allow you to filter by the variables passed to the query. If `filter` is passed in addition to `query` or `mutation` then both filters shall be applied.
 
 ```js
-await graphQL.resolveAll({query: petQuery});
+await graphQL.resolveNext({query: petQuery});
 ```
 
 ```js
-await graphQL.resolveAll({
+await graphQL.resolveNext({
   query: petQuery,
   filter: (operation) => operation.variables.id === '1',
 });
@@ -63,9 +75,25 @@ await graphQL.resolveAll({
 
 Note that, until a GraphQL operation has been resolved, it does not appear in the `operations` list described below.
 
+#### `resolveAll()`
+
+Similar to `resolveNext()`, but this will wait for any newly created GraphQL operations to finish. This is useful in the cases that one graphql call is loaded, which kicks off another GraphQL query/mutation.
+
+The signature for `resolveAll` is identical to the signature for `resolveNext`.
+
+```js
+await graphQL.resolveAll();
+```
+
+#### `waitForQueryUpdates()`
+
+Apollo 3.6.0+ batches updates to the cache asynchronously. This means that in cases where you trigger fetching more data using `fetchMore` often the cache is persisted in the next tick and thus the component making the query does not update in the expected act block. This can result in flaky tests where you request data, and use resolveAll to fetch it, but the React component under test does not update.
+
+The `waitForQueryUpdates()` method shall ensure all cache updates are resolved.
+
 #### `wrap()`
 
-The `wrap()` method allows you to wrap all GraphQL resolutions in a function call. This can be useful when working with React components, which require that all operations that lead to state changes be wrapped in an `act()` call. The following example demonstrates using this with [`@shopify/react-testing`](../react-testing):
+The `wrap()` method allows you to wrap all calls to `resolveAll()` and `waitForQueryUpdates()` in a function call. This can be useful when working with React components, which require that all operations that lead to state changes be wrapped in an `act()` call. The following example demonstrates using this with [`@shopify/react-testing`](../react-testing):
 
 ```tsx
 const myComponent = mount(<MyComponent />);

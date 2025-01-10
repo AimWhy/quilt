@@ -1,14 +1,9 @@
 import {faker} from '@faker-js/faker/locale/en';
-import {
-  Navigation,
-  NavigationResult,
-  Performance,
-  LifecycleEvent,
-  EventType,
-} from '@shopify/performance';
+import type {Performance, LifecycleEvent} from '@shopify/performance';
+import {Navigation, NavigationResult, EventType} from '@shopify/performance';
 
-import {NavigationListener} from '../navigation-listener';
-import {LifecycleEventListener} from '../lifecycle-event-listener';
+import type {NavigationListener} from '../navigation-listener';
+import type {LifecycleEventListener} from '../lifecycle-event-listener';
 
 interface TestInterface {
   simulateNavigation(navigation?: Navigation): Navigation;
@@ -78,8 +73,8 @@ export function mockPerformance(
 export function mockLifecycleEvent(): LifecycleEvent {
   return {
     type: randomLifecycleEventType(),
-    start: faker.datatype.number(),
-    duration: faker.datatype.number(),
+    start: faker.number.int(),
+    duration: faker.number.int(),
   } as any;
 }
 
@@ -99,14 +94,14 @@ export function randomLifecycleEventType() {
 export function mockNavigation() {
   return new Navigation(
     {
-      start: faker.datatype.number({min: 0, max: 100000}),
-      duration: faker.datatype.number({min: 0, max: 100000}),
+      start: faker.number.int({min: 0, max: 100000}),
+      duration: faker.number.int({min: 0, max: 100000}),
       target: faker.internet.url(),
       events: [],
-      result: randomNavigationResult(),
+      result: NavigationResult.Finished,
     },
     {
-      index: faker.datatype.number(),
+      index: faker.number.int(),
       supportsDetailedEvents: faker.datatype.boolean(),
       supportsDetailedTime: faker.datatype.boolean(),
     },
@@ -129,10 +124,10 @@ export function randomConnection() {
   const effectiveTypes = ['2g', '3g', '4g'];
 
   return {
-    downlink: faker.datatype.number(),
+    downlink: faker.number.int(),
     effectiveType: faker.helpers.arrayElement(effectiveTypes),
     onchange: null,
-    rtt: faker.datatype.number(),
+    rtt: faker.number.int(),
     saveData: faker.datatype.boolean(),
   };
 }

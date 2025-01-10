@@ -1,5 +1,13 @@
 # `@shopify/sewing-kit-koa`
 
+> [!CAUTION]
+>
+> `@shopify/sewing-kit-koa` is deprecated.
+>
+> Shopifolk, see
+> [Shopify/quilt-internal](https://github.com/shopify/quilt-internal) for
+> information on the latest packages available for use internally.
+
 [![Build Status](https://github.com/Shopify/quilt/workflows/Node-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ANode-CI)
 [![Build Status](https://github.com/Shopify/quilt/workflows/Ruby-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ARuby-CI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md) [![npm version](https://badge.fury.io/js/%40shopify%2Fsewing-kit-koa.svg)](https://badge.fury.io/js/%40shopify%2Fsewing-kit-koa.svg)
@@ -102,7 +110,7 @@ For more advanced use cases, you can pick out specific async assets with the `as
 
 ### GraphQL
 
-Starting in version 3.3 of this library (and the associated 82.0 release of sewing-kit), the `ctx.state.assets` object also has a `graphQLSource` method, which allows you to access the full source for a GraphQL document based on its ID. This is useful for doing "persisted" GraphQL queries. However, if you use [`@shopify/graphql-persisted`](../graphql-persisted), it will automatically use this feature without you needing to think about it, so calling this method directly is generally not necessary.
+Starting in version 3.3 of this library (and the associated 82.0 release of sewing-kit), the `ctx.state.assets` object also has a `graphQLSource` method, which allows you to access the full source for a GraphQL document based on its ID. This is useful for doing "persisted" GraphQL queries.
 
 ### Options
 

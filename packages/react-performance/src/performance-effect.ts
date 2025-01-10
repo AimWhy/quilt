@@ -1,5 +1,5 @@
 import {useContext, useEffect} from 'react';
-import {Performance} from '@shopify/performance';
+import type {Performance} from '@shopify/performance';
 
 import {PerformanceContext} from './context';
 
@@ -23,6 +23,8 @@ export function usePerformanceEffect(
     if (cleanup) {
       return cleanup;
     }
+
+    return undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [performance, ...dependencies]);
 }

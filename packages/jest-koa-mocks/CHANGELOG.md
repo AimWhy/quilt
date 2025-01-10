@@ -1,5 +1,41 @@
 # Changelog
 
+## 5.3.1
+
+### Patch Changes
+
+- [#2835](https://github.com/Shopify/quilt/pull/2835) [`408f6be`](https://github.com/Shopify/quilt/commit/408f6be2aeeaf2f6997d4157c1c6aaeec51d1cb9) Thanks [@jesstelford](https://github.com/jesstelford)! - Use correct type for exported MockContext
+
+## 5.3.0
+
+### Minor Changes
+
+- [#2791](https://github.com/Shopify/quilt/pull/2791) [`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892) Thanks [@vsumner](https://github.com/vsumner)! - Update typescript, eslint, and prettier
+
+## 5.2.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+## 5.1.1
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+## 5.1.0
+
+### Minor Changes
+
+- [#2602](https://github.com/Shopify/quilt/pull/2602) [`cd1c5c891`](https://github.com/Shopify/quilt/commit/cd1c5c891a56273d5d313b90b32ff6a3aa21e924) Thanks [@mateus](https://github.com/mateus)! - Using non-fully qualified URLs
+
+## 5.0.2
+
+### Patch Changes
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
 ## 5.0.1
 
 ### Patch Changes

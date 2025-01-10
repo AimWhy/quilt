@@ -1,9 +1,7 @@
-import React, {ReactElement} from 'react';
+import type {ReactElement} from 'react';
+import React from 'react';
 import {faker} from '@faker-js/faker/locale/en';
-import gql from 'graphql-tag';
-import {ApolloClient} from 'apollo-client';
-import {ApolloLink} from 'apollo-link';
-import {InMemoryCache} from 'apollo-cache-inmemory';
+import {ApolloClient, ApolloLink, InMemoryCache, gql} from '@apollo/client';
 import {getUsedAssets as baseGetUsedAssets} from '@shopify/react-async/testing';
 import {createMount} from '@shopify/react-testing';
 import {
@@ -112,7 +110,7 @@ describe('createAsyncQueryComponent()', () => {
     });
 
     it('marks the assets as being used on the next page', async () => {
-      const id = faker.datatype.uuid();
+      const id = faker.string.uuid();
       const AsyncQuery = createAsyncQueryComponent({
         id: () => id,
         load: () => createResolvablePromise(query).promise,
@@ -149,9 +147,9 @@ describe('createAsyncQueryComponent()', () => {
 
       const client = createMockApolloClient();
       const watchQuerySpy = jest.spyOn(client, 'watchQuery');
-      watchQuerySpy.mockImplementation(() => ({subscribe() {}} as any));
+      watchQuerySpy.mockImplementation(() => ({subscribe() {}}) as any);
 
-      const variables = {name: faker.name.firstName()};
+      const variables = {name: faker.person.firstName()};
       const asyncQuery = mount(<AsyncQuery.Prefetch variables={variables} />, {
         client,
       });
@@ -171,7 +169,7 @@ describe('createAsyncQueryComponent()', () => {
     });
 
     it('marks the assets as being used on the next page', async () => {
-      const id = faker.datatype.uuid();
+      const id = faker.string.uuid();
       const AsyncQuery = createAsyncQueryComponent({
         id: () => id,
         load: () => createResolvablePromise(query).promise,
@@ -208,9 +206,9 @@ describe('createAsyncQueryComponent()', () => {
 
       const client = createMockApolloClient();
       const watchQuerySpy = jest.spyOn(client, 'watchQuery');
-      watchQuerySpy.mockImplementation(() => ({subscribe() {}} as any));
+      watchQuerySpy.mockImplementation(() => ({subscribe() {}}) as any);
 
-      const variables = {name: faker.name.firstName()};
+      const variables = {name: faker.person.firstName()};
       const asyncQuery = mount(<AsyncQuery.KeepFresh variables={variables} />, {
         client,
       });
@@ -231,7 +229,7 @@ describe('createAsyncQueryComponent()', () => {
     });
 
     it('marks the assets as being used on the next page', async () => {
-      const id = faker.datatype.uuid();
+      const id = faker.string.uuid();
       const AsyncQuery = createAsyncQueryComponent({
         id: () => id,
         load: () => createResolvablePromise(query).promise,

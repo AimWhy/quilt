@@ -1,6 +1,5 @@
-import {
+import type {
   Event,
-  EventType,
   NavigationDefinition,
   NavigationResult,
   NavigationMetadata,
@@ -9,6 +8,7 @@ import {
   StyleDownloadEvent,
   EventMap,
 } from './types';
+import {EventType} from './types';
 import {getUniqueRanges} from './utilities';
 
 const LIFECYCLE_EVENTS: LifecycleEvent['type'][] = [
@@ -104,7 +104,10 @@ export class Navigation implements NavigationDefinition {
       return undefined;
     }
 
-    return events.filter(({duration}) => duration === 0).length / events.length;
+    return (
+      events.filter(({metadata}) => Boolean(metadata?.cached)).length /
+      events.length
+    );
   }
 
   toJSON({

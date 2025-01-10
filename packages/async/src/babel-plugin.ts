@@ -1,5 +1,7 @@
-import Types from '@babel/types';
-import {NodePath, Binding} from '@babel/traverse';
+import type Types from '@babel/types';
+import type {NodePath, BabelFile} from '@babel/core';
+
+type Binding = BabelFile['scope']['bindings'][string];
 
 /* eslint-disable @typescript-eslint/naming-convention */
 const DEFAULT_PACKAGES_TO_PROCESS = {

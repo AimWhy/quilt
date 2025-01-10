@@ -2,7 +2,8 @@
 import os from 'os';
 import fs from 'fs';
 
-import puppeteer, {Browser, PuppeteerLifeCycleEvent} from 'puppeteer';
+import type {Browser, PuppeteerLifeCycleEvent} from 'puppeteer';
+import puppeteer from 'puppeteer';
 import pMap from 'p-map';
 import chalk from 'chalk';
 import Koa from 'koa';
@@ -201,8 +202,11 @@ export class A11yTestRunner {
         const config = a11yParameters.config ?? {};
         const options = a11yParameters.options ?? {restoreScrool: true};
 
+        // The root selector differs between storybook v6 and 7.
+        // v6 uses "#root", v7 uses "#storybook-root"
         const results = await new AxePuppeteer(page)
           .include('#root')
+          .include('#storybook-root')
           .configure(config)
           .options(options)
           .analyze();

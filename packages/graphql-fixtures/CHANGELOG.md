@@ -1,5 +1,104 @@
 # Changelog
 
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [[`88f1cbe`](https://github.com/Shopify/quilt/commit/88f1cbed60807594537c52da1d2af1ae74c60795)]:
+  - graphql-tool-utilities@3.1.1
+
+## 8.0.0
+
+### Minor Changes
+
+- [#2791](https://github.com/Shopify/quilt/pull/2791) [`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892) Thanks [@vsumner](https://github.com/vsumner)! - Update typescript, eslint, and prettier
+
+### Patch Changes
+
+- Updated dependencies [[`d691952`](https://github.com/Shopify/quilt/commit/d691952749248efd274a2a9a67c8879b9241c892)]:
+  - graphql-typed@2.3.0
+  - @shopify/useful-types@5.3.0
+
+## 7.0.0
+
+### Patch Changes
+
+- Updated dependencies [[`bdebd9197`](https://github.com/Shopify/quilt/commit/bdebd919729fa9f2145aa7003395316081afadef)]:
+  - graphql-typed@2.2.0
+
+## 6.0.0
+
+### Minor Changes
+
+- [#2785](https://github.com/Shopify/quilt/pull/2785) [`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece) Thanks [@vsumner](https://github.com/vsumner)! - Drop support for node 14 and 16. Support node LTS and up.
+
+### Patch Changes
+
+- Updated dependencies [[`97f8f6cf5`](https://github.com/Shopify/quilt/commit/97f8f6cf5f0f5c8adc03ff6d907fb16d878fbece)]:
+  - graphql-tool-utilities@3.1.0
+  - graphql-typed@2.1.0
+  - @shopify/useful-types@5.2.0
+
+## 5.0.3
+
+### Patch Changes
+
+- [#2778](https://github.com/Shopify/quilt/pull/2778) [`12f780698`](https://github.com/Shopify/quilt/commit/12f7806982f7b0b890792e9d389cbf6055a68362) Thanks [@BPScott](https://github.com/BPScott)! - Add graphql `^16.0.0` as an allowable graphql dependency version
+
+- Updated dependencies [[`12f780698`](https://github.com/Shopify/quilt/commit/12f7806982f7b0b890792e9d389cbf6055a68362)]:
+  - graphql-tool-utilities@3.0.4
+  - graphql-typed@2.0.3
+
+## 5.0.2
+
+### Patch Changes
+
+- [#2718](https://github.com/Shopify/quilt/pull/2718) [`591e65366`](https://github.com/Shopify/quilt/commit/591e653663440408588447159d1758273b189d47) Thanks [@dependabot](https://github.com/apps/dependabot)! - Bump @babel/traverse from 7.17.9 to 7.23.2
+
+## 5.0.1
+
+### Patch Changes
+
+- [#2732](https://github.com/Shopify/quilt/pull/2732) [`46056a94c`](https://github.com/Shopify/quilt/commit/46056a94ce17ae47c8f8cab6714a84aae8815f3a) Thanks [@BPScott](https://github.com/BPScott)! - Import from faker from `faker-js/faker/locale/en` to avoid the overhead of loading non-english locales
+
+## 5.0.0
+
+### Major Changes
+
+- [#2655](https://github.com/Shopify/quilt/pull/2655) [`54defaeb6`](https://github.com/Shopify/quilt/commit/54defaeb6f15411afffed63ee7eb0e47bc198596) Thanks [@mdentremont](https://github.com/mdentremont)! - Update @faker-js/faker to ^8.0.0 (which is exported from graphql-fixtures).
+
+## 4.0.1
+
+### Patch Changes
+
+- [#2701](https://github.com/Shopify/quilt/pull/2701) [`43ec02dd2`](https://github.com/Shopify/quilt/commit/43ec02dd2ff6a21f6d3adb96220d3991dda0c92c) Thanks [@Flufd](https://github.com/Flufd)! - Removes calls to set faker seed if it's not needed
+
+## 4.0.0
+
+### Major Changes
+
+- [#2100](https://github.com/Shopify/quilt/pull/2100) [`27932c219`](https://github.com/Shopify/quilt/commit/27932c219203f31d2a9073f670e6bb0b59bfae6d) Thanks [@alexandcote](https://github.com/alexandcote)! - Add a new function `createFillers`. The function return an object containing `fillOperation` and `fillFragment`. It's now possible to fill a fragment without a query. You can replace `createFiller` by `createFillers` if you need to be able to fill fragments. `Thunk`, `DeepThunk`, `Resolver`, `Options`, `Context` and `GraphQLFillerData` generic type changed.
+
+## 3.1.2
+
+### Patch Changes
+
+- [#2608](https://github.com/Shopify/quilt/pull/2608) [`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` everywhere that we deal with importing types
+
+- Updated dependencies [[`ba4da84d5`](https://github.com/Shopify/quilt/commit/ba4da84d5237603433f8097f79421bab6ea48f86)]:
+  - graphql-tool-utilities@3.0.3
+  - graphql-typed@2.0.2
+  - @shopify/useful-types@5.1.2
+
+## 3.1.1
+
+### Patch Changes
+
+- [#2595](https://github.com/Shopify/quilt/pull/2595) [`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f) Thanks [@BPScott](https://github.com/BPScott)! - Use `import type` when importing types
+
+- Updated dependencies [[`93ec0a0e5`](https://github.com/Shopify/quilt/commit/93ec0a0e57a1962a455f15a46977a3c05a02369f)]:
+  - graphql-tool-utilities@3.0.2
+
 ## 3.1.0
 
 ### Minor Changes

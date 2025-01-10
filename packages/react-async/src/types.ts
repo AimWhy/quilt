@@ -1,6 +1,6 @@
-import {ReactElement} from 'react';
-import {Resolver} from '@shopify/async';
-import {IfAllOptionalKeys, NoInfer} from '@shopify/useful-types';
+import type {ReactElement, ReactNode} from 'react';
+import type {Resolver} from '@shopify/async';
+import type {IfAllOptionalKeys, NoInfer} from '@shopify/useful-types';
 
 export enum AssetTiming {
   None = 1,
@@ -55,31 +55,14 @@ export interface AsyncComponentType<
   Preload(props: PreloadOptions): React.ReactElement<{}> | null;
   Prefetch(props: PrefetchOptions): React.ReactElement<{}> | null;
   KeepFresh(props: KeepFreshOptions): React.ReactElement<{}> | null;
+  renderLoading: ((props: Props) => ReactNode) | undefined;
 }
 
-export type PreloadOptions<T> = T extends AsyncHookTarget<
-  any,
-  infer U,
-  any,
-  any
->
-  ? U
-  : never;
+export type PreloadOptions<T> =
+  T extends AsyncHookTarget<any, infer U, any, any> ? U : never;
 
-export type PrefetchOptions<T> = T extends AsyncHookTarget<
-  any,
-  any,
-  infer U,
-  any
->
-  ? U
-  : never;
+export type PrefetchOptions<T> =
+  T extends AsyncHookTarget<any, any, infer U, any> ? U : never;
 
-export type KeepFreshOptions<T> = T extends AsyncHookTarget<
-  any,
-  any,
-  any,
-  infer U
->
-  ? U
-  : never;
+export type KeepFreshOptions<T> =
+  T extends AsyncHookTarget<any, any, any, infer U> ? U : never;

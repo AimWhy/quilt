@@ -12,50 +12,58 @@ import {
   isLessThanOneWeekAway,
   isLessThanOneYearAway,
 } from '@shopify/dates';
-import {memoize} from '@shopify/decorators';
+import {
+  formatName as importedFormatName,
+  abbreviateName as importedAbbreviateName,
+  abbreviateBusinessName as importedAbbreviateBusinessName,
+  hasFamilyNameGivenNameOrdering as importedHasFamilyNameGivenNameOrdering,
+} from '@shopify/name';
+import {memoize} from '@shopify/function-enhancers';
 import {languageFromLocale, regionFromLocale} from '@shopify/i18n';
 
-import {
+import type {
   I18nDetails,
   PrimitiveReplacementDictionary,
   ComplexReplacementDictionary,
   TranslationDictionary,
-  LanguageDirection,
 } from './types';
+import {LanguageDirection} from './types';
+import type {Weekday} from './constants';
 import {
   dateStyle,
   DateStyle,
   DEFAULT_WEEK_START_DAY,
   WEEK_START_DAYS,
   RTL_LANGUAGES,
-  Weekday,
   currencyDecimalPlaces,
   DEFAULT_DECIMAL_PLACES,
-  DIRECTION_CONTROL_CHARACTERS,
-  EASTERN_NAME_ORDER_FORMATTERS,
   CurrencyShortFormException,
+  UnicodeCharacterSet,
 } from './constants';
-import {
-  MissingCurrencyCodeError,
-  MissingCountryError,
-  I18nError,
-} from './errors';
+import type {I18nError} from './errors';
+import {MissingCurrencyCodeError, MissingCountryError} from './errors';
+import type {TranslateOptions as RootTranslateOptions} from './utilities';
 import {
   getCurrencySymbol,
   translate,
   getTranslationTree,
-  TranslateOptions as RootTranslateOptions,
   memoizedNumberFormatter,
   memoizedPluralRules,
   convertFirstSpaceToNonBreakingSpace,
+  identifyScripts,
 } from './utilities';
 
 export interface NumberFormatOptions extends Intl.NumberFormatOptions {
-  as?: 'number' | 'currency' | 'percent';
+  as?: 'decimal' | 'currency' | 'percent';
   precision?: number;
 }
+
 export interface CurrencyFormatOptions extends NumberFormatOptions {
   form?: 'auto' | 'short' | 'explicit' | 'none';
+}
+
+export interface PercentageFormatOptions extends Intl.NumberFormatOptions {
+  percentageSignDisplay?: 'auto' | 'never';
 }
 
 export interface TranslateOptions {
@@ -68,7 +76,6 @@ const NEGATIVE_SIGN = '-';
 const REGEX_DIGITS = /\d/g;
 const REGEX_NON_DIGITS = /\D/g;
 const REGEX_PERIODS = /\./g;
-const NEGATIVE_CHARACTERS = '\\p{Pd}\u2212';
 
 export class I18n {
   readonly locale: string;
@@ -215,9 +222,10 @@ export class I18n {
     }
   }
 
-  translationKeyExists(id: string) {
+  translationKeyExists(id: string, absolute = false) {
     try {
-      getTranslationTree(id, this.translations, this.locale);
+      const result = getTranslationTree(id, this.translations, this.locale);
+      if (absolute) return typeof result === 'string';
       return true;
     } catch (error) {
       return false;
@@ -296,8 +304,24 @@ export class I18n {
     return parseFloat(normalizedValue).toFixed(decimalPlaces);
   }
 
-  formatPercentage(amount: number, options: Intl.NumberFormatOptions = {}) {
-    return this.formatNumber(amount, {as: 'percent', ...options});
+  formatPercentage(amount: number, options: PercentageFormatOptions = {}) {
+    const {percentageSignDisplay = 'auto', ...otherOptions} = options;
+
+    if (percentageSignDisplay === 'auto') {
+      return this.formatNumber(amount, {as: 'percent', ...otherOptions});
+    }
+
+    const {locale} = this;
+
+    const parts = memoizedNumberFormatter(locale, {
+      style: 'percent',
+      ...otherOptions,
+    }).formatToParts(amount);
+
+    return parts
+      .filter((part) => part.type !== 'literal' && part.type !== 'percentSign')
+      .map((part) => part.value)
+      .join('');
   }
 
   formatDate(
@@ -363,41 +387,59 @@ export class I18n {
   }
 
   formatName(
-    firstName?: string,
-    lastName?: string,
+    givenName?: string | null,
+    familyName?: string | null,
     options?: {full?: boolean},
   ) {
-    if (!firstName) {
-      return lastName || '';
-    }
-    if (!lastName) {
-      return firstName;
-    }
+    return importedFormatName({
+      name: {givenName, familyName},
+      locale: this.locale,
+      options,
+    });
+  }
 
-    const isFullName = Boolean(options && options.full);
+  abbreviateName({
+    firstName,
+    lastName,
+    idealMaxLength = 3,
+  }: {
+    firstName?: string;
+    lastName?: string;
+    idealMaxLength?: number;
+  }) {
+    return importedAbbreviateName({
+      name: {
+        givenName: firstName,
+        familyName: lastName,
+      },
+      locale: this.locale,
+      options: {idealMaxLength},
+    });
+  }
 
-    const customNameFormatter =
-      EASTERN_NAME_ORDER_FORMATTERS.get(this.locale) ||
-      EASTERN_NAME_ORDER_FORMATTERS.get(this.language);
+  abbreviateBusinessName({
+    name,
+    idealMaxLength = 3,
+  }: {
+    name: string;
+    idealMaxLength?: number;
+  }) {
+    return importedAbbreviateBusinessName({
+      name,
+      idealMaxLength,
+    });
+  }
 
-    if (customNameFormatter) {
-      return customNameFormatter(firstName, lastName, isFullName);
-    }
-    if (isFullName) {
-      return `${firstName} ${lastName}`;
-    }
-    return firstName;
+  identifyScript(text: string) {
+    return identifyScripts(text);
   }
 
   hasEasternNameOrderFormatter() {
-    const easternNameOrderFormatter =
-      EASTERN_NAME_ORDER_FORMATTERS.get(this.locale) ||
-      EASTERN_NAME_ORDER_FORMATTERS.get(this.language);
-    return Boolean(easternNameOrderFormatter);
+    return importedHasFamilyNameGivenNameOrdering(this.locale);
   }
 
-  @memoize()
-  numberSymbols() {
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  numberSymbols = memoize(() => {
     const formattedNumber = this.formatNumber(123456.7, {
       maximumFractionDigits: 1,
       minimumFractionDigits: 1,
@@ -411,7 +453,7 @@ export class I18n {
       }
     }
     return {thousandSymbol, decimalSymbol};
-  }
+  });
 
   private formatCurrencyAuto(
     amount: number,
@@ -448,8 +490,8 @@ export class I18n {
   ): string {
     const formattedAmount = this.formatCurrencyNone(amount, options);
     const negativeRegex = new RegExp(
-      `[${DIRECTION_CONTROL_CHARACTERS}]*[${NEGATIVE_CHARACTERS}]`,
-      'gu',
+      `${UnicodeCharacterSet.DirectionControl}*${UnicodeCharacterSet.Negative}`,
+      'g',
     );
     const negativeMatch = negativeRegex.exec(formattedAmount)?.shift() || '';
 
@@ -750,7 +792,7 @@ export class I18n {
     const decimalValue = this.decimalValue(input, lastIndexOfDecimal);
 
     const negativeRegex = new RegExp(
-      `^[${DIRECTION_CONTROL_CHARACTERS}\\s]*[${NEGATIVE_CHARACTERS}]`,
+      `^(${UnicodeCharacterSet.DirectionControl}|\\s)*${UnicodeCharacterSet.Negative}`,
       'u',
     );
     const negativeSign = input.match(negativeRegex) ? NEGATIVE_SIGN : '';

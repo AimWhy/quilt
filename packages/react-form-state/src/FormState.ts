@@ -2,7 +2,7 @@
 import React from 'react';
 
 import {mapObject, set, isEqual, flatMap} from './utilities';
-import {
+import type {
   FieldDescriptors,
   FieldState,
   ValueMapper,
@@ -20,7 +20,9 @@ type MaybeArray<T> = T | T[];
 type MaybePromise<T> = T | Promise<T>;
 
 interface SubmitHandler<Fields> {
-  (formDetails: FormData<Fields>):
+  (
+    formDetails: FormData<Fields>,
+  ):
     | MaybePromise<RemoteError[]>
     | MaybePromise<void>
     | MaybePromise<RemoteError[] | void>;

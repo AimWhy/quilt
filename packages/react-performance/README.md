@@ -1,5 +1,13 @@
 # `@shopify/react-performance`
 
+> [!CAUTION]
+>
+> `@shopify/react-performance` is deprecated.
+>
+> Shopifolk, see
+> [Shopify/quilt-internal](https://github.com/shopify/quilt-internal) for
+> information on the latest packages available for use internally.
+
 [![Build Status](https://github.com/Shopify/quilt/workflows/Node-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ANode-CI)
 [![Build Status](https://github.com/Shopify/quilt/workflows/Ruby-CI/badge.svg?branch=main)](https://github.com/Shopify/quilt/actions?query=workflow%3ARuby-CI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md) [![npm version](https://badge.fury.io/js/%40shopify%2Freact-performance.svg)](https://badge.fury.io/js/%40shopify%2Freact-performance.svg) [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/@shopify/react-performance.svg)](https://img.shields.io/bundlephobia/minzip/@shopify/react-performance.svg)
@@ -280,6 +288,23 @@ import {ProductPage} from './ProductPage';
 
 function App() {
   usePerformanceReport('/performance-report', {locale: navigator.language});
+  return <ProductPage />;
+}
+```
+
+##### Including non-Finished Navigations
+
+By default, `usePerformanceReport` will only report on navigations that were "Finished" (ie. a performance mark with Stage.Complete was rendered). If you want to include Navigations that were "Cancelled" or "Timed Out" you can specify those.
+
+```tsx
+// App.tsx
+import React from 'react';
+import {NavigationResult} from '@shopify/performance';
+import {usePerformanceReport} from '@shopify/react-performance';
+import {ProductPage} from './ProductPage';
+
+function App() {
+  usePerformanceReport('/performance-report', {finishedNavigationsOnly: false});
   return <ProductPage />;
 }
 ```
